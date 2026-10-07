@@ -18,7 +18,9 @@ jobs:
           use-public-rspm: true
       - uses: r-lib/actions/setup-renv@v2
       - name: Parse R code and validate released intermediates
-        run: Rscript --vanilla tests/check_repository.R
+        # Do not use --vanilla here: the project .Rprofile activates the
+        # package library restored by setup-renv.
+        run: Rscript tests/check_repository.R
       - name: Verify released-workbook checksums
         working-directory: data/intermediate
         run: sha256sum --check SHA256SUMS.txt
