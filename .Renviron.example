@@ -1,0 +1,20 @@
+# Copy this file to .Renviron and replace every placeholder with a protected
+# local path. .Renviron is ignored by Git and must never contain shared data.
+
+# Eight regional PRENEC Excel workbooks.
+PRENEC_DATA_DIR=C:/secure/PRENEC/BasesPRENEC
+
+# Patient-level transformed PRENEC cohort used for local FIT sensitivity.
+PRENEC_BASE_SENS=C:/secure/PRENEC/Base_prenec.xlsx
+PRENEC_BASE_TRANSFORMADA=C:/secure/PRENEC/Base_prenec.xlsx
+
+# Historical aggregate workbooks used only for the A/B comparison audit.
+PRENEC_BASE_A_ACTUAL=C:/secure/PRENEC/reference/Base_finalA_N.xlsx
+PRENEC_BASE_B_ACTUAL=C:/secure/PRENEC/reference/Base_finalB_N.xlsx
+
+# Reproducible random-number settings.
+PRENEC_SEED=20260923
+PRENEC_BASE_SEED=20260923
+PRENEC_SEED_MODEL=20260924
+PRENEC_N_SIM=10000
+

@@ -1,0 +1,77 @@
+# R and renv local state
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+.Renviron
+renv/library/
+renv/staging/
+renv/local/
+
+# Restricted PRENEC data
+data/raw/*
+!data/raw/.gitkeep
+data/private/*
+!data/private/.gitkeep
+data/derived/*
+!data/derived/.gitkeep
+**/Base_prenec*.xlsx
+**/BaseSens*.xlsx
+**/Base_final*.xlsx
+**/Comparacion_bases*.xlsx
+
+# Vetted intermediate A/B products released with the open repository
+data/intermediate/*
+!data/intermediate/
+!data/intermediate/README.md
+!data/intermediate/SHA256SUMS.txt
+!data/intermediate/Base_finalA_N_aleatoria_cohorte_actual_semilla_20260923.xlsx
+!data/intermediate/Base_finalA_N_aleatoria_hombres_cohorte_actual_semilla_20260923.xlsx
+!data/intermediate/Base_finalA_N_aleatoria_mujeres_cohorte_actual_semilla_20260923.xlsx
+!data/intermediate/Base_finalB_N_aleatoria_cohorte_actual_semilla_20260923.xlsx
+!data/intermediate/Base_finalB_N_aleatoria_hombres_cohorte_actual_semilla_20260923.xlsx
+!data/intermediate/Base_finalB_N_aleatoria_mujeres_cohorte_actual_semilla_20260923.xlsx
+
+# Generated results are local until disclosure review
+results/*
+!results/README.md
+outputs/
+output/
+resultados_*/
+*.rds
+*.RData
+*.rda
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+config/local.*
+*.pem
+*.key
+*.pfx
+
+# Temporary and build files
+tmp/
+.artifact_work/
+.pdf_work/
+.sensitivity_work/
+.spreadsheet_work/
+.tectonic-cache/
+.work/
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.ndjson
+*.inspect.*
+Rplots.pdf
+*.zip
+Thumbs.db
+Desktop.ini
+
+# Third-party source material is not redistributed
+fuentes_pdf/
+van_rijn_thesis.pdf
+
