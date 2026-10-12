@@ -6,7 +6,8 @@
 # Outcomes:
 #   - low-risk adenoma;
 #   - high-risk adenoma;
-#   - colorectal cancer.
+#   - colorectal cancer;
+#   - any adenoma (direct participant-level endpoint).
 #
 # All outcomes are defined at the patient level. For lesion j, age e and
 # simulation m:
@@ -18,15 +19,18 @@
 # Here, SeFIT is FIT sensitivity, Adh is colonoscopy adherence conditional on a
 # positive selected FIT, and SeCOL is colonoscopy sensitivity. The resulting r
 # is the adjusted population detection rate and p is modelled prevalence.
-# Age-specific estimates are weighted by the corresponding population count.
+# Age-specific estimates are weighted by the number of participants with at
+# least one observed FIT in the corresponding age stratum.
 # The analysis is performed for databases A and B, for both sexes combined and
 # separately for men and women.
 #
-# The population variable (pop) remains the denominator for D and the age
-# weights. FIT-positive and colonoscopy counts are used only to estimate Adh,
-# defined as colonoscopy completion within the programme window conditional on
-# a positive selected FIT. The model does not correct for FIT coverage or FIT
-# positivity, and test specificity does not enter either equation.
+# The population variable (pop) is restricted to participants with at least one
+# observed FIT and is the denominator for D and the age weights. FIT-positive
+# and colonoscopy counts are used only to estimate Adh, defined as colonoscopy
+# completion within the programme window conditional on a positive selected
+# FIT. People without an observed FIT are outside this estimand; consequently,
+# no separate FIT-coverage correction is applied. FIT positivity and test
+# specificity do not enter either equation.
 #
 # Uncertainty is propagated jointly through Monte Carlo sampling. Programme
 # detection, FIT sensitivity, adherence, and colonoscopy sensitivity are drawn
@@ -90,6 +94,10 @@ seed_external_fit <- suppressWarnings(as.integer(Sys.getenv(
   "PRENEC_SEED_FIT_EXTERNAL",
   unset = as.character(seed_model + 2L)
 )))
+seed_any_adenoma <- suppressWarnings(as.integer(Sys.getenv(
+  "PRENEC_SEED_ANY_ADENOMA",
+  unset = as.character(seed_model + 3L)
+)))
 seed_adherence <- suppressWarnings(as.integer(Sys.getenv(
   "PRENEC_SEED_ADHERENCE",
   unset = as.character(seed_model + 4L)
@@ -104,6 +112,7 @@ numeric_configuration <- c(
   seed_model,
   seed_colonoscopy,
   seed_external_fit,
+  seed_any_adenoma,
   seed_adherence,
   n_sim
 )
@@ -130,12 +139,26 @@ colonoscopy_parameter_file <- Sys.getenv(
 )
 external_fit_parameter_file <- Sys.getenv(
   "PRENEC_FIT_PARAMS_PUBLICATION",
-  unset = file.path(
-    project_directory,
-    "data",
-    "parameters",
-    "external_fit_sensitivity_parameters.xlsx"
-  )
+  unset = {
+    repository_combined <- file.path(
+      project_directory,
+      "data",
+      "parameters",
+      "external_fit_sensitivity_parameters_combined.xlsx"
+    )
+    workspace_combined <- file.path(
+      project_directory,
+      "..",
+      "outputs",
+      "01a0cc7d-eb1d-7522-8625-894950ce685a",
+      "parametros_sensibilidad_fit_Lin_nonadvanced_anyadenoma.xlsx"
+    )
+    if (file.exists(repository_combined)) {
+      repository_combined
+    } else {
+      workspace_combined
+    }
+  }
 )
 sensitivity_cohort_file <- Sys.getenv(
   "PRENEC_BASE_SENS",
@@ -157,16 +180,18 @@ if (length(missing_files) > 0L) {
 }
 dir.create(output_directory, recursive = TRUE, showWarnings = FALSE)
 
-lesion_keys <- c("low_risk", "high_risk", "cancer")
+lesion_keys <- c("low_risk", "high_risk", "cancer", "adenoma_total")
 lesion_labels <- c(
   low_risk = "Low-risk adenoma",
   high_risk = "High-risk adenoma",
-  cancer = "Colorectal cancer"
+  cancer = "Colorectal cancer",
+  adenoma_total = "Any adenoma"
 )
 count_columns <- c(
   low_risk = "low_risk",
   high_risk = "high_risk",
-  cancer = "cancer"
+  cancer = "cancer",
+  adenoma_total = "adenoma_total"
 )
 age_groups <- c("50-54", "55-59", "60-64", "65-69", "70-74", "75")
 fit_source_labels <- c(
@@ -366,7 +391,8 @@ lesion_status <- list(
       !is.na(sensitivity_data$adenoma_risk) ~ 0L,
     TRUE ~ NA_integer_
   ),
-  cancer = sensitivity_data$cancer_present
+  cancer = sensitivity_data$cancer_present,
+  adenoma_total = sensitivity_data$adenoma_present
 )
 
 local_fit_rows <- lapply(lesion_keys, function(key) {
@@ -435,7 +461,9 @@ read_external_fit_parameters <- function(path) {
       (
         (table$scenario_id == "meta_naa_oc100" & table$lesion_key == "low_risk") |
           (table$scenario_id == "lin_2021_oc_sensor" &
-             table$lesion_key %in% c("high_risk", "cancer"))
+             table$lesion_key %in% c("high_risk", "cancer")) |
+          (table$scenario_id == "meta_any_adenoma_oc100" &
+             table$lesion_key == "adenoma_total")
       ),
     ,
     drop = FALSE
@@ -443,11 +471,12 @@ read_external_fit_parameters <- function(path) {
   expected <- c(
     "meta_naa_oc100::low_risk",
     "lin_2021_oc_sensor::high_risk",
-    "lin_2021_oc_sensor::cancer"
+    "lin_2021_oc_sensor::cancer",
+    "meta_any_adenoma_oc100::adenoma_total"
   )
   observed <- paste(table$scenario_id, table$lesion_key, sep = "::")
   if (!setequal(observed, expected) || anyDuplicated(observed)) {
-    stop("The three required external FIT inputs are not uniquely defined.", call. = FALSE)
+    stop("The four required external FIT inputs are not uniquely defined.", call. = FALSE)
   }
   numeric_fields <- c(
     "estimate", "ci_lower", "ci_upper", "beta_a", "beta_b",
@@ -521,10 +550,21 @@ external_fit_high_cancer <- draw_external_fit_scenario(
   n_sim,
   seed_external_fit
 )
+external_fit_any_adenoma <- draw_external_fit_scenario(
+  external_fit_parameters[
+    external_fit_parameters$scenario_id == "meta_any_adenoma_oc100",
+    ,
+    drop = FALSE
+  ],
+  "adenoma_total",
+  n_sim,
+  seed_any_adenoma
+)
 external_fit_draws <- cbind(
   low_risk = external_fit_low[, "low_risk"],
   high_risk = external_fit_high_cancer[, "high_risk"],
-  cancer = external_fit_high_cancer[, "cancer"]
+  cancer = external_fit_high_cancer[, "cancer"],
+  adenoma_total = external_fit_any_adenoma[, "adenoma_total"]
 )
 
 read_colonoscopy_parameters <- function(path) {
@@ -579,8 +619,9 @@ colonoscopy_parameters <- read_colonoscopy_parameters(
   colonoscopy_parameter_file
 )
 
-# The parameter stream contains seven fixed positions. Positions 4-6 correspond
-# to the three reported outcomes and remain unchanged across analysis versions.
+# The parameter stream contains seven fixed positions. Positions 4-6 retain
+# low-risk adenoma, high-risk adenoma, and colorectal cancer, respectively;
+# position 7 is used for the newly reported direct any-adenoma endpoint.
 set.seed(seed_colonoscopy)
 colonoscopy_uniforms <- matrix(
   runif(n_sim * 7L),
@@ -641,8 +682,8 @@ if (length(missing_bases) > 0L) {
 }
 
 required_base_columns <- c(
-  "Edad_2", "pop", "low_risk", "high_risk", "cancer",
-  "fit_positive_n", "colonoscopy_n"
+  "Edad_2", "pop", "low_risk", "high_risk", "cancer", "adenoma_total",
+  "fit_observed_n", "fit_positive_n", "colonoscopy_n"
 )
 
 read_analysis_base <- function(path) {
@@ -663,24 +704,34 @@ read_analysis_base <- function(path) {
     ,
     drop = FALSE
   ]
-  for (field in c("low_risk", "high_risk", "cancer")) {
+  for (field in unname(count_columns)) {
     data[[field]][is.na(data[[field]])] <- 0
   }
   if (nrow(data) == 0L ||
       any(!is.finite(as.matrix(data))) ||
       any(data$pop < 0) ||
+      any(data$fit_observed_n < 0) ||
       any(data$fit_positive_n < 0) ||
       any(data$colonoscopy_n < 0) ||
       any(data$colonoscopy_n > data$fit_positive_n) ||
-      any(data$fit_positive_n > data$pop)) {
+      any(data$fit_positive_n > data$fit_observed_n) ||
+      any(data$fit_observed_n != data$pop)) {
     stop("Invalid denominator counts in ", basename(path), ".", call. = FALSE)
   }
-  for (field in c("low_risk", "high_risk", "cancer")) {
+  for (field in unname(count_columns)) {
     if (any(data[[field]] < 0) ||
         any(data[[field]] > data$colonoscopy_n) ||
         any(data[[field]] > data$pop)) {
       stop("Invalid lesion counts in ", basename(path), ".", call. = FALSE)
     }
+  }
+  if (any(data$low_risk + data$high_risk > data$adenoma_total)) {
+    stop(
+      "Risk-classified adenomas exceed the direct any-adenoma count in ",
+      basename(path),
+      ".",
+      call. = FALSE
+    )
   }
   data
 }
@@ -693,8 +744,8 @@ validate_sex_totals <- function(base_id) {
   men <- analysis_bases[[paste0(base_id, "_Men")]]
   women <- analysis_bases[[paste0(base_id, "_Women")]]
   fields <- c(
-    "pop", "low_risk", "high_risk", "cancer",
-    "fit_positive_n", "colonoscopy_n"
+    "pop", "low_risk", "high_risk", "cancer", "adenoma_total",
+    "fit_observed_n", "fit_positive_n", "colonoscopy_n"
   )
   sum_by_age <- function(x) {
     x %>%
@@ -722,6 +773,26 @@ validate_sex_totals <- function(base_id) {
 
 validate_sex_totals("A")
 validate_sex_totals("B")
+
+analysis_denominators <- do.call(rbind, lapply(names(analysis_bases), function(name) {
+  data <- analysis_bases[[name]]
+  context <- analysis_files[analysis_files$Analysis == name, , drop = FALSE]
+  data.frame(
+    Analysis = name,
+    Base = context$Base,
+    Sex = context$Sex,
+    Population = sum(data$pop),
+    FIT_observed = sum(data$fit_observed_n),
+    FIT_positive = sum(data$fit_positive_n),
+    Colonoscopy_window = sum(data$colonoscopy_n),
+    stringsAsFactors = FALSE
+  )
+}))
+rownames(analysis_denominators) <- NULL
+
+if (any(analysis_denominators$Population != analysis_denominators$FIT_observed)) {
+  stop("The analysis denominator includes participants without an observed FIT.", call. = FALSE)
+}
 
 build_adherence_table <- function(data, analysis_name) {
   context <- analysis_files[
@@ -839,8 +910,8 @@ simulate_analysis <- function(data, adherence, analysis_name) {
 
   for (i in seq_len(n_sim)) {
     # Fixed-width streams keep the retained outcomes reproducible if the list
-    # of reported outcomes changes. The selected positions correspond to the
-    # three prespecified lesion definitions.
+    # of reported outcomes changes. Positions 4-6 retain the three original
+    # lesion definitions; position 1 is assigned to direct any adenoma.
     u_detection <- runif(6)
     u_local_fit <- runif(5)
     invisible(runif(1))
@@ -860,6 +931,11 @@ simulate_analysis <- function(data, adherence, analysis_name) {
         u_detection[[6]],
         data$cancer,
         data$pop - data$cancer
+      )),
+      adenoma_total = suppressWarnings(qbeta(
+        u_detection[[1]],
+        data$adenoma_total,
+        data$pop - data$adenoma_total
       ))
     )
 
@@ -884,7 +960,16 @@ simulate_analysis <- function(data, adherence, analysis_name) {
       ),
       cancer = local_fit_parameters$estimate[
         local_fit_parameters$lesion_key == "cancer"
-      ]
+      ],
+      adenoma_total = qbeta(
+        u_local_fit[[1]],
+        local_fit_parameters$true_positive[
+          local_fit_parameters$lesion_key == "adenoma_total"
+        ] + 0.5,
+        local_fit_parameters$false_negative[
+          local_fit_parameters$lesion_key == "adenoma_total"
+        ] + 0.5
+      )
     )
     literature_fit <- external_fit_draws[i, lesion_keys]
     fit_values <- list(
@@ -1048,7 +1133,7 @@ fit_input_table <- rbind(
     Estimate = local_fit_table$Mean,
     Lower_95 = local_fit_table$Lower_CI,
     Upper_95 = local_fit_table$Upper_CI,
-    Distribution = c("beta", "beta", "fixed"),
+    Distribution = ifelse(lesion_keys == "cancer", "fixed", "beta"),
     Source_ID = "PRENEC high-risk cohort",
     stringsAsFactors = FALSE
   ),
@@ -1101,6 +1186,7 @@ sensitivity_inputs <- rbind(fit_input_table, colonoscopy_input_table)
 metadata <- data.frame(
   Field = c(
     "Age range",
+    "Analysis population",
     "FIT threshold",
     "FIT selection",
     "Adherence definition",
@@ -1114,10 +1200,12 @@ metadata <- data.frame(
     "Model seed",
     "Colonoscopy seed",
     "External FIT seed",
+    "Any-adenoma FIT seed",
     "Adherence seed"
   ),
   Value = c(
     "50-75 years",
+    "Participants without a family history of colorectal cancer and with at least one observed FIT",
     ">=100 ng Hb/mL",
     "One observed FIT selected at random per person",
     "Colonoscopy in the prespecified window among people with a positive selected FIT",
@@ -1131,6 +1219,7 @@ metadata <- data.frame(
     as.character(seed_model),
     as.character(seed_colonoscopy),
     as.character(seed_external_fit),
+    as.character(seed_any_adenoma),
     as.character(seed_adherence)
   ),
   stringsAsFactors = FALSE
@@ -1184,6 +1273,7 @@ write_tsv(
   "model_estimates_both_sexes.tsv"
 )
 write_tsv(colonoscopy_detection, "colonoscopy_detection_rates.tsv")
+write_tsv(analysis_denominators, "analysis_denominators.tsv")
 write_tsv(adherence_draw_summary, "adherence_parameters.tsv")
 write_tsv(sensitivity_inputs, "sensitivity_inputs.tsv")
 write_tsv(metadata, "metadata.tsv")
@@ -1191,6 +1281,7 @@ write_tsv(metadata, "metadata.tsv")
 saveRDS(
   list(
     estimates = model_estimates,
+    denominators = analysis_denominators,
     colonoscopy_detection = colonoscopy_detection,
     adherence = adherence_draw_summary,
     sensitivity_inputs = sensitivity_inputs,

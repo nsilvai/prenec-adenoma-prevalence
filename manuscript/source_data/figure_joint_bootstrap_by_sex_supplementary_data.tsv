@@ -1,0 +1,65 @@
+Population	Estimand	Lesion_key	Lesion	FIT_sensitivity_scenario	Assignment	Plugin_estimate_percent	Percentile_lower_95_percent	Percentile_upper_95_percent
+Men	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	PRENEC	A	31.7140484432126	20.8253833661744	50.5463298136854
+Men	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	PRENEC	B	30.6223291459261	19.974591900241	48.9852314117141
+Men	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	Literature	A	29.1295205431449	23.1497084098664	36.0158920728381
+Men	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	Literature	B	28.1267706181519	22.247869034481	34.8361148618608
+Men	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	PRENEC	A	14.4060060595684	10.6527940866683	19.9819821837632
+Men	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	PRENEC	B	14.5112444483566	10.6907011896618	20.1035091962201
+Men	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	Literature	A	13.6322819489522	11.4596910607432	16.1011035535705
+Men	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	Literature	B	13.7318681480612	11.5601025854055	16.1670705699115
+Men	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	PRENEC	A	45.9694250147256	36.016298482082	59.966735231888
+Men	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	PRENEC	B	45.1933801027368	35.2680947431044	58.6938389584959
+Men	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	Literature	A	50.9743175677977	41.8679676663458	62.2461910548906
+Men	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	Literature	B	50.113781248757	41.2589051557483	61.1938487635664
+Men	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	PRENEC	A	0.541565607490369	0.39681950922166	0.876683364976687
+Men	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	PRENEC	B	0.55601447669637	0.407288841630747	0.904977143843103
+Men	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	Literature	A	0.731845415527525	0.50600227052795	1.00835993902613
+Men	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	Literature	B	0.751370914454554	0.52031144266033	1.0328887895367
+Men	Prevalence	low_risk	Low-risk adenoma	PRENEC	A	39.7206123746284	26.151414608435	63.6402285351565
+Men	Prevalence	low_risk	Low-risk adenoma	PRENEC	B	38.3532764097147	25.0080680702504	61.4446920120147
+Men	Prevalence	low_risk	Low-risk adenoma	Literature	A	36.4835916872879	28.7861330424617	45.2281140006807
+Men	Prevalence	low_risk	Low-risk adenoma	Literature	B	35.227686401318	27.7654714886515	43.8116518713934
+Men	Prevalence	high_risk	High-risk adenoma	PRENEC	A	17.557319885099	12.7086832559182	25.7467803162304
+Men	Prevalence	high_risk	High-risk adenoma	PRENEC	B	17.6855791714346	12.7294442482382	25.8171936658764
+Men	Prevalence	high_risk	High-risk adenoma	Literature	A	16.6143436252855	13.5453950826333	21.3204551992466
+Men	Prevalence	high_risk	High-risk adenoma	Literature	B	16.7357143054496	13.678223612012	21.4996739767836
+Men	Prevalence	adenoma_total	Any adenoma	PRENEC	A	49.679238261528	38.8789613011363	65.0791566396565
+Men	Prevalence	adenoma_total	Any adenoma	PRENEC	B	48.8405651636595	38.086047554538	63.9163861379535
+Men	Prevalence	adenoma_total	Any adenoma	Literature	A	55.0880344241462	45.199437953252	67.5561998180446
+Men	Prevalence	adenoma_total	Any adenoma	Literature	B	54.1580513144461	44.5090309043918	66.476869425395
+Men	Prevalence	cancer	Colorectal cancer	PRENEC	A	0.593639223595212	0.434895576155315	0.978856833746831
+Men	Prevalence	cancer	Colorectal cancer	PRENEC	B	0.609477407147944	0.448795898922987	1.00713139766338
+Men	Prevalence	cancer	Colorectal cancer	Literature	A	0.802215167020556	0.55401137690176	1.13076736972614
+Men	Prevalence	cancer	Colorectal cancer	Literature	B	0.823618117767492	0.568813767467727	1.15758103981882
+Women	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	PRENEC	A	18.8936290570761	12.6034582266758	29.8700155970162
+Women	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	PRENEC	B	18.7256782115569	12.485671616081	29.6653252657962
+Women	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	Literature	A	17.3538978077221	14.0899302658316	21.0743143912213
+Women	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	Literature	B	17.1996340714618	14.0135562985964	20.9588849923768
+Women	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	PRENEC	A	8.09164965509345	6.04544129639068	11.1586290581308
+Women	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	PRENEC	B	8.6593766267981	6.49319308150753	11.9028256464062
+Women	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	Literature	A	7.65705977591964	6.58104767202211	8.91822796553244
+Women	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	Literature	B	8.19429501768618	7.06648409843611	9.49765042019077
+Women	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	PRENEC	A	26.4171473013918	20.7891064376855	34.2177592575029
+Women	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	PRENEC	B	27.7780524014348	21.8617166374906	36.0831239172897
+Women	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	Literature	A	29.2932977809723	24.2726830388658	35.3806164012341
+Women	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	Literature	B	30.8023705772278	25.5201665944248	37.2109759576592
+Women	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	PRENEC	A	0.211484088454335	0.156302949748666	0.343365434317508
+Women	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	PRENEC	B	0.18115845802274	0.130483440115854	0.296835896401281
+Women	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	Literature	A	0.285789308722074	0.198077078306795	0.38804315669244
+Women	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	Literature	B	0.244808727057757	0.166629796483072	0.338239738983515
+Women	Prevalence	low_risk	Low-risk adenoma	PRENEC	A	23.6635356558128	15.7862018237985	37.6123427547233
+Women	Prevalence	low_risk	Low-risk adenoma	PRENEC	B	23.4531837530968	15.6519228932789	37.1970136891808
+Women	Prevalence	low_risk	Low-risk adenoma	Literature	A	21.7350821432881	17.6250737111054	26.4967708843438
+Women	Prevalence	low_risk	Low-risk adenoma	Literature	B	21.5418728126525	17.5208737299297	26.372988595363
+Women	Prevalence	high_risk	High-risk adenoma	PRENEC	A	9.86169801714515	7.18867328620548	14.2783350591209
+Women	Prevalence	high_risk	High-risk adenoma	PRENEC	B	10.5536152639102	7.72073687818024	15.2156995097071
+Women	Prevalence	high_risk	High-risk adenoma	Literature	A	9.33204160190206	7.73421121325705	11.8410764033656
+Women	Prevalence	high_risk	High-risk adenoma	Literature	B	9.98679705280503	8.27180760643234	12.6532915521417
+Women	Prevalence	adenoma_total	Any adenoma	PRENEC	A	28.5490574344865	22.4567281202115	37.104721955014
+Women	Prevalence	adenoma_total	Any adenoma	PRENEC	B	30.0197899636559	23.5906195753962	39.1386141447838
+Women	Prevalence	adenoma_total	Any adenoma	Literature	A	31.6573183036472	26.1722284509446	38.3730553488514
+Women	Prevalence	adenoma_total	Any adenoma	Literature	B	33.2881759220567	27.6328564677803	40.4697850586151
+Women	Prevalence	cancer	Colorectal cancer	PRENEC	A	0.231819096959559	0.171472491004049	0.382071711023063
+Women	Prevalence	cancer	Colorectal cancer	PRENEC	B	0.198577540524927	0.14311254184625	0.330343271383264
+Women	Prevalence	cancer	Colorectal cancer	Literature	A	0.31326904994535	0.21732326928365	0.434381286510132
+Women	Prevalence	cancer	Colorectal cancer	Literature	B	0.268348027736388	0.182007185072919	0.380411841436106

@@ -6,8 +6,9 @@
 # Inputs:
 #   PRENEC_DATA_DIR, PRENEC_BASE_A_ACTUAL, and PRENEC_BASE_B_ACTUAL.
 # Outputs:
-#   Six age-aggregated workbooks: A/B for both sexes, men, and women, plus
-#   reproducibility audits. Outputs remain outside version control.
+#   Six age-aggregated release workbooks under data/intermediate, and separate
+#   reproducibility audits under results/quality_control/database_build.
+#   Generated audit outputs remain outside version control.
 # Random component:
 #   One FIT round is selected per participant using PRENEC_SEED. Assignment B is
 #   complementary to A when both rounds are observed.
@@ -49,6 +50,16 @@ if (!nzchar(Sys.getenv("PRENEC_OUTPUT_DIR", unset = ""))) {
       directorio_proyecto,
       "data",
       "intermediate"
+    )
+  )
+}
+if (!nzchar(Sys.getenv("PRENEC_AUDIT_DIR", unset = ""))) {
+  Sys.setenv(
+    PRENEC_AUDIT_DIR = file.path(
+      directorio_proyecto,
+      "results",
+      "quality_control",
+      "database_build"
     )
   )
 }

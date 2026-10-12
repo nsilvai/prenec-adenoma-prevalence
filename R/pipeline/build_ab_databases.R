@@ -6,12 +6,14 @@
 #   classifications, family-history group, and qualifying colonoscopy; select
 #   one FIT per participant; and create A/B aggregates by age and sex.
 # Population:
-#   A/B analytical outputs use highrisk == 0.
+#   A/B analytical outputs use highrisk == 0 participants with at least one
+#   observed FIT result.
 # Inputs and outputs:
 #   Protected paths are supplied through PRENEC_* environment variables.
 #   Restricted derived workbooks are written under PRENEC_OUTPUT_DIR.
 # Invariants:
-#   No correction for FIT coverage is introduced. Lesion counts require a
+#   No correction for FIT coverage is introduced because people without an
+#   observed FIT are excluded from the estimand. Lesion counts require a
 #   positive selected FIT and a qualifying colonoscopy. A/B share participants
 #   and are complementary assignments, not independent samples.
 ##### Cargar paquetes ----
@@ -51,6 +53,17 @@ ruta_salida <- Sys.getenv(
 )
 dir.create(ruta_salida, recursive = TRUE, showWarnings = FALSE)
 
+ruta_auditoria <- Sys.getenv(
+  "PRENEC_AUDIT_DIR",
+  unset = file.path(
+    project_directory,
+    "results",
+    "quality_control",
+    "database_build"
+  )
+)
+dir.create(ruta_auditoria, recursive = TRUE, showWarnings = FALSE)
+
 ruta_baseA_actual <- Sys.getenv(
   "PRENEC_BASE_A_ACTUAL",
   unset = file.path(project_directory, "data", "private", "Base_finalA_N.xlsx")
@@ -75,6 +88,7 @@ ruta_archivos <- Sys.getenv(
 )
 
 archivo_salida <- function(nombre) file.path(ruta_salida, nombre)
+archivo_auditoria <- function(nombre) file.path(ruta_auditoria, nombre)
 
 
 if (!usar_base_transformada) {
@@ -561,7 +575,9 @@ rm(sexo_texto, sexo_no_clasificado, valores_no_clasificados)
 # Sorteo complementario por individuo ----
 # Para personas con ambas rondas observadas, una moneda justa decide si A usa
 # Ronda_1 y B Ronda_2, o viceversa. Si solo existe una ronda, ambas bases usan
-# el único resultado disponible; si no existe ninguna, ambas quedan en NA.
+# el único resultado disponible. Las personas sin ninguna ronda observada se
+# conservan para los diagnósticos de flujo, pero no pertenecen a la cohorte
+# analítica utilizada como denominador.
 # El orden por Codigo hace reproducible la asignación mientras no cambie la cohorte.
 
 if (anyNA(prenec$Codigo) || anyDuplicated(prenec$Codigo) > 0L) {
@@ -600,7 +616,8 @@ prenec <- prenec %>%
       ronda_sorteada_B == 1L ~ Ronda_1,
       ronda_sorteada_B == 2L ~ Ronda_2,
       TRUE                   ~ NA_character_
-    )
+    ),
+    tiene_fit_observado = !is.na(Ronda_1) | !is.na(Ronda_2)
   )
 
 # Controles de integridad del sorteo. Se comparan valores y NA de forma
@@ -628,6 +645,10 @@ indice_ninguna <- is.na(prenec$Ronda_1) & is.na(prenec$Ronda_2)
 if (any(indice_ninguna & (!is.na(prenec$FIT_A) | !is.na(prenec$FIT_B)))) {
   stop("Fallo de integridad: se asignó un resultado a una persona sin rondas observadas.")
 }
+if (any(prenec$tiene_fit_observado !=
+        (!is.na(prenec$FIT_A) & !is.na(prenec$FIT_B)))) {
+  stop("Fallo de integridad: la disponibilidad de FIT no coincide entre la cohorte y las bases A/B.")
+}
 
 fuente_analisis <- if (usar_base_transformada) ruta_base_transformada else ruta_archivos
 
@@ -654,7 +675,7 @@ fuente_analisis <- if (usar_base_transformada) ruta_base_transformada else ruta_
 # Crear la variable "pop"
 
 BaseResumenA <- prenec %>%
-  filter(highrisk == 0) %>%
+  filter(highrisk == 0, tiene_fit_observado) %>%
   group_by(Edad_2) %>%
   mutate(pop = n()) %>%
   ungroup()
@@ -861,7 +882,7 @@ base_finalA_N <- resumen_edad_unicaA_N %>%
 # Crear la variable "pop"
 
 BaseResumenB <- prenec %>%
-  filter(highrisk == 0) %>%
+  filter(highrisk == 0, tiene_fit_observado) %>%
   group_by(Edad_2) %>%
   mutate(pop = n()) %>%
   ungroup()
@@ -1061,11 +1082,12 @@ variables_diagnostico <- c(
 variables_comparacion <- c(variables_resultado, variables_diagnostico)
 
 # Construye una referencia por edad usando una ronda FIT fija sobre exactamente
-# la misma cohorte analítica que las bases aleatorizadas. Los ceros se dejan
-# como NA para mantener el formato de las bases históricas.
+# la cohorte con al menos una ronda observada. En A y B, la única ronda
+# disponible se copia a ambas bases, por lo que pop y fit_observed_n coinciden.
+# Los ceros se dejan como NA para mantener el formato de las bases históricas.
 construir_base_referencia <- function(datos, variable_fit) {
   datos %>%
-    filter(highrisk == 0) %>%
+    filter(highrisk == 0, tiene_fit_observado) %>%
     group_by(Edad_2) %>%
     summarise(
       pop = n(),
@@ -1143,7 +1165,12 @@ base_finalB_N_mujeres <- construir_base_referencia(
   "FIT_B"
 )
 
-validar_base_final <- function(base, nombre_base, n_esperado) {
+validar_base_final <- function(
+  base,
+  nombre_base,
+  n_esperado,
+  requiere_fit_observado_completo = FALSE
+) {
   if (sum(base$pop, na.rm = TRUE) != n_esperado) {
     stop(nombre_base, ": la suma de pop no coincide con la cohorte analítica.")
   }
@@ -1161,6 +1188,12 @@ validar_base_final <- function(base, nombre_base, n_esperado) {
         ": no se cumple 0 <= colonoscopy_n <= fit_positive_n <= ",
         "fit_observed_n <= pop."
       )
+    )
+  }
+  if (requiere_fit_observado_completo && any(base$fit_observed_n != base$pop)) {
+    stop(
+      nombre_base,
+      ": pop debe incluir exclusivamente personas con un FIT seleccionado observado."
     )
   }
 
@@ -1192,18 +1225,33 @@ validar_base_final <- function(base, nombre_base, n_esperado) {
   }
 }
 
-n_cohorte_analitica <- sum(prenec$highrisk == 0, na.rm = TRUE)
-validar_base_final(base_finalA_N, "Base A aleatorizada", n_cohorte_analitica)
-validar_base_final(base_finalB_N, "Base B aleatorizada", n_cohorte_analitica)
+n_cohorte_analitica <- sum(
+  prenec$highrisk == 0 & prenec$tiene_fit_observado,
+  na.rm = TRUE
+)
+validar_base_final(
+  base_finalA_N,
+  "Base A aleatorizada",
+  n_cohorte_analitica,
+  requiere_fit_observado_completo = TRUE
+)
+validar_base_final(
+  base_finalB_N,
+  "Base B aleatorizada",
+  n_cohorte_analitica,
+  requiere_fit_observado_completo = TRUE
+)
 validar_base_final(base_referencia_R1, "Referencia Ronda 1", n_cohorte_analitica)
 validar_base_final(base_referencia_R2, "Referencia Ronda 2", n_cohorte_analitica)
 
 n_hombres_analiticos <- sum(
-  prenec$highrisk == 0 & prenec$Sexo_analisis == "Hombre",
+  prenec$highrisk == 0 & prenec$tiene_fit_observado &
+    prenec$Sexo_analisis == "Hombre",
   na.rm = TRUE
 )
 n_mujeres_analiticas <- sum(
-  prenec$highrisk == 0 & prenec$Sexo_analisis == "Mujer",
+  prenec$highrisk == 0 & prenec$tiene_fit_observado &
+    prenec$Sexo_analisis == "Mujer",
   na.rm = TRUE
 )
 if (n_hombres_analiticos + n_mujeres_analiticas != n_cohorte_analitica) {
@@ -1213,22 +1261,26 @@ if (n_hombres_analiticos + n_mujeres_analiticas != n_cohorte_analitica) {
 validar_base_final(
   base_finalA_N_hombres,
   "Base A aleatorizada - hombres",
-  n_hombres_analiticos
+  n_hombres_analiticos,
+  requiere_fit_observado_completo = TRUE
 )
 validar_base_final(
   base_finalA_N_mujeres,
   "Base A aleatorizada - mujeres",
-  n_mujeres_analiticas
+  n_mujeres_analiticas,
+  requiere_fit_observado_completo = TRUE
 )
 validar_base_final(
   base_finalB_N_hombres,
   "Base B aleatorizada - hombres",
-  n_hombres_analiticos
+  n_hombres_analiticos,
+  requiere_fit_observado_completo = TRUE
 )
 validar_base_final(
   base_finalB_N_mujeres,
   "Base B aleatorizada - mujeres",
-  n_mujeres_analiticas
+  n_mujeres_analiticas,
+  requiere_fit_observado_completo = TRUE
 )
 
 validar_particion_sexo <- function(base_total, base_hombres, base_mujeres, nombre_base) {
@@ -1468,7 +1520,8 @@ resumen_distancias <- bind_rows(
   calcular_distancia("B_aleatoria", "B_historica_20250104", "cohorte_distinta_usar_tasas")
 )
 
-prenec_analisis <- prenec %>% filter(highrisk == 0)
+prenec_analisis <- prenec %>%
+  filter(highrisk == 0, tiene_fit_observado)
 
 resumen_sorteo <- tibble(
   base = c("A_aleatoria", "B_aleatoria", "Ronda_1_original", "Ronda_2_original", "Positivo_en_alguna_ronda"),
@@ -1592,9 +1645,9 @@ ruta_salida_A_hombres <- archivo_salida(paste0("Base_finalA_N_aleatoria_hombres"
 ruta_salida_A_mujeres <- archivo_salida(paste0("Base_finalA_N_aleatoria_mujeres", sufijo_semilla))
 ruta_salida_B_hombres <- archivo_salida(paste0("Base_finalB_N_aleatoria_hombres", sufijo_semilla))
 ruta_salida_B_mujeres <- archivo_salida(paste0("Base_finalB_N_aleatoria_mujeres", sufijo_semilla))
-ruta_salida_R1 <- archivo_salida(paste0("Base_finalR1_N_referencia_", etiqueta_archivo_cohorte, ".xlsx"))
-ruta_salida_R2 <- archivo_salida(paste0("Base_finalR2_N_referencia_", etiqueta_archivo_cohorte, ".xlsx"))
-ruta_salida_comparacion <- archivo_salida(
+ruta_salida_R1 <- archivo_auditoria(paste0("Base_finalR1_N_referencia_", etiqueta_archivo_cohorte, ".xlsx"))
+ruta_salida_R2 <- archivo_auditoria(paste0("Base_finalR2_N_referencia_", etiqueta_archivo_cohorte, ".xlsx"))
+ruta_salida_comparacion <- archivo_auditoria(
   paste0("Comparacion_bases_aleatorias", sufijo_semilla)
 )
 

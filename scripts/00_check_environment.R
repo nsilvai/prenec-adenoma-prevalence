@@ -117,15 +117,25 @@ if (identical(scope, "analysis") && any(!file.exists(intermediate_files))) {
   stop("One or more released A/B intermediate workbooks are missing.", call. = FALSE)
 }
 
-parameter_files <- file.path(
-  project_root,
-  "data",
-  "parameters",
-  c(
-    "colonoscopy_sensitivity_parameters.xlsx",
-    "external_fit_sensitivity_parameters.xlsx"
+colonoscopy_parameter_file <- Sys.getenv(
+  "PRENEC_COL_PARAMS",
+  unset = file.path(
+    project_root,
+    "data",
+    "parameters",
+    "colonoscopy_sensitivity_parameters.xlsx"
   )
 )
+fit_parameter_file <- Sys.getenv(
+  "PRENEC_FIT_PARAMS_PUBLICATION",
+  unset = file.path(
+    project_root,
+    "data",
+    "parameters",
+    "external_fit_sensitivity_parameters_combined.xlsx"
+  )
+)
+parameter_files <- c(colonoscopy_parameter_file, fit_parameter_file)
 if (any(!file.exists(parameter_files))) {
   stop("One or more literature parameter workbooks are missing.", call. = FALSE)
 }

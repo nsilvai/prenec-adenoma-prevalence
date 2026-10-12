@@ -3,8 +3,9 @@
 # Tabla descriptiva independiente del modelo de prevalencia -------------------
 #
 # Objetivo:
-#   Describir la cohorte PRENEC con highrisk == 0, total y por sexo, sin
-#   modificar ni reutilizar las bases agregadas A/B del modelo de prevalencia.
+#   Describir la cohorte analitica PRENEC con highrisk == 0 y al menos un FIT
+#   observado, total y por sexo, sin modificar ni reutilizar las bases
+#   agregadas A/B del modelo de prevalencia.
 #
 # Definiciones heredadas del proyecto:
 #   * highrisk == 0 corresponde a Familiar_CACO == "NO".
@@ -348,12 +349,15 @@ prenec <- prenec %>%
 
 cohorte_highrisk0_completa <- prenec %>% filter(highrisk == 0L)
 
-cohorte <- cohorte_highrisk0_completa %>%
+cohorte_edad_elegible <- cohorte_highrisk0_completa %>%
   filter(
     !is.na(Edad_2),
     Edad_2 >= EDAD_MINIMA,
     Edad_2 <= EDAD_MAXIMA
-  ) %>%
+  )
+
+cohorte <- cohorte_edad_elegible %>%
+  filter(!is.na(Valor_TSDO_1_1) | !is.na(Valor_TSDO_2_1)) %>%
   mutate(
     FIT1_mayor_100 = !is.na(Valor_TSDO_1_1) & Valor_TSDO_1_1 > UMBRAL_FIT_ESTRICTO,
     FIT2_mayor_100 = !is.na(Valor_TSDO_2_1) & Valor_TSDO_2_1 > UMBRAL_FIT_ESTRICTO,
@@ -619,7 +623,9 @@ tabla_principal <- tabla_formateada_larga %>%
 # Validaciones ----------------------------------------------------------------
 
 n_highrisk0_completa <- nrow(cohorte_highrisk0_completa)
+n_edad_elegible <- nrow(cohorte_edad_elegible)
 n_analitica <- nrow(cohorte)
+n_sin_fit <- n_edad_elegible - n_analitica
 n_mujeres <- sum(cohorte$Sexo_analisis == "Mujeres", na.rm = TRUE)
 n_hombres <- sum(cohorte$Sexo_analisis == "Hombres", na.rm = TRUE)
 n_sexo_no_clasificado <- sum(is.na(cohorte$Sexo_analisis))
@@ -647,7 +653,9 @@ validaciones <- tibble(
   validacion = c(
     "Regional files loaded",
     "highrisk=0 records before age restriction",
-    "highrisk=0 records aged 50–75 years",
+    "highrisk=0 records aged 50–75 years before FIT availability",
+    "Analytic cohort with at least one observed FIT",
+    "Age-eligible records excluded because neither FIT was observed",
     "Women + men = analytic cohort",
     "Unclassified sex in analytic cohort",
     "Qualifying colonoscopies",
@@ -674,7 +682,9 @@ validaciones <- tibble(
   valor = c(
     length(archivos),
     n_highrisk0_completa,
+    n_edad_elegible,
     n_analitica,
+    n_sin_fit,
     n_mujeres + n_hombres,
     n_sexo_no_clasificado,
     n_colonoscopias,
@@ -702,7 +712,9 @@ validaciones <- tibble(
     "8",
     "34311",
     "34241",
-    "34241",
+    "31104",
+    "3137",
+    "31104",
     "0",
     "3434",
     "3434",

@@ -58,8 +58,8 @@ keys <- paste(
 )
 add_check(
   "Expected result rows",
-  nrow(estimates) == 72L,
-  paste("Observed", nrow(estimates), "rows; expected 72")
+  nrow(estimates) == 96L,
+  paste("Observed", nrow(estimates), "rows; expected 96")
 )
 add_check(
   "Unique result keys",
@@ -70,7 +70,7 @@ add_check(
   "Reported lesions",
   setequal(
     unique(estimates$Lesion_key),
-    c("low_risk", "high_risk", "cancer")
+    c("low_risk", "high_risk", "cancer", "adenoma_total")
   ),
   paste(sort(unique(estimates$Lesion_key)), collapse = ", ")
 )
@@ -94,6 +94,43 @@ add_check(
   "Lower <= mean <= upper"
 )
 
+denominators <- result$denominators
+expected_analyses <- c(
+  "A_Total", "A_Men", "A_Women",
+  "B_Total", "B_Men", "B_Women"
+)
+add_check(
+  "Expected denominator rows",
+  is.data.frame(denominators) &&
+    setequal(denominators$Analysis, expected_analyses) &&
+    !anyDuplicated(denominators$Analysis),
+  "One denominator row for each A/B and sex analysis"
+)
+if (is.data.frame(denominators) &&
+    all(c("Analysis", "Population", "FIT_observed") %in% names(denominators))) {
+  population <- setNames(denominators$Population, denominators$Analysis)
+  fit_observed <- setNames(denominators$FIT_observed, denominators$Analysis)
+  add_check(
+    "FIT-observed analytic denominator",
+    all(population == fit_observed),
+    "Population equals the number with at least one observed FIT in every analysis"
+  )
+  add_check(
+    "Both-sex analytic population",
+    population[["A_Total"]] == 31104 && population[["B_Total"]] == 31104,
+    paste("A:", population[["A_Total"]], "B:", population[["B_Total"]])
+  )
+  add_check(
+    "Sex counts reconcile with totals",
+    population[["A_Men"]] + population[["A_Women"]] == population[["A_Total"]] &&
+      population[["B_Men"]] + population[["B_Women"]] == population[["B_Total"]],
+    paste0(
+      "A: ", population[["A_Men"]], " + ", population[["A_Women"]],
+      "; B: ", population[["B_Men"]], " + ", population[["B_Women"]]
+    )
+  )
+}
+
 for (analysis_name in names(result$draws)) {
   analysis <- result$draws[[analysis_name]]
   add_check(
@@ -108,7 +145,34 @@ for (analysis_name in names(result$draws)) {
 
 max_draw_difference <- NA_real_
 if (file.exists(reference_file)) {
-  reference <- readRDS(reference_file)$scenario_results
+  reference_object <- readRDS(reference_file)
+  reference_total_population <- unique(
+    reference_object$final_estimands$Population[
+      reference_object$final_estimands$Analysis == "A_Total"
+    ]
+  )
+  current_total_population <- denominators$Population[
+    denominators$Analysis == "A_Total"
+  ]
+  comparable_denominator <-
+    length(reference_total_population) == 1L &&
+    length(current_total_population) == 1L &&
+    isTRUE(all.equal(reference_total_population, current_total_population))
+
+  if (!comparable_denominator) {
+    checks[[length(checks) + 1L]] <- data.frame(
+      Check = "Draw-level numerical equivalence",
+      Value = "Not applicable",
+      Status = "NOT APPLICABLE",
+      Details = paste0(
+        "Historical reference used N=", paste(reference_total_population, collapse = ", "),
+        "; current analysis uses N=", paste(current_total_population, collapse = ", "),
+        ". Regenerate the reference before testing draw equivalence."
+      ),
+      stringsAsFactors = FALSE
+    )
+  } else {
+  reference <- reference_object$scenario_results
   analysis_map <- c(
     A_Total = "A_Total",
     A_Men = "A_Hombres",
@@ -165,6 +229,7 @@ if (file.exists(reference_file)) {
       digits = 16
     ))
   )
+  }
 } else {
   checks[[length(checks) + 1L]] <- data.frame(
     Check = "Draw-level numerical equivalence",

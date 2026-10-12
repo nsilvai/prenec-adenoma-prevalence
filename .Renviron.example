@@ -12,9 +12,24 @@ PRENEC_BASE_TRANSFORMADA=C:/secure/PRENEC/Base_prenec.xlsx
 PRENEC_BASE_A_ACTUAL=C:/secure/PRENEC/reference/Base_finalA_N.xlsx
 PRENEC_BASE_B_ACTUAL=C:/secure/PRENEC/reference/Base_finalB_N.xlsx
 
+# Restricted deidentified participant frame created by Stage 09 for the
+# manuscript's joint participant-bootstrap uncertainty analysis.
+# This file remains protected and must not be committed or shared.
+PRENEC_BOOTSTRAP_FRAME=C:/secure/PRENEC/prenec_joint_bootstrap_frame.rds
+
+# Joint-bootstrap output location.
+PRENEC_JOINT_BOOTSTRAP_OUTPUT_DIR=C:/secure/PRENEC/results/joint_bootstrap
+
 # Reproducible random-number settings.
 PRENEC_SEED=20260923
 PRENEC_BASE_SEED=20260923
 PRENEC_SEED_MODEL=20260924
 PRENEC_N_SIM=10000
+
+# Joint participant-bootstrap settings.
+PRENEC_N_BOOTSTRAP=10000
+PRENEC_SEED_BOOTSTRAP=20261008
+PRENEC_SEED_FIT_LOCAL_BOOTSTRAP=20261009
+PRENEC_SEED_FIT_LITERATURE_BOOTSTRAP=20261010
+PRENEC_SEED_COLONOSCOPY_BOOTSTRAP=20261011
 

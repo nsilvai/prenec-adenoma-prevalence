@@ -12,8 +12,8 @@ measurement, colonoscopy record, or free-text clinical field is included.
 | Variable | Definition |
 |---|---|
 | `Edad_2` | Age at programme enrolment |
-| `pop` | Number of eligible participants at that age |
-| `fit_observed_n` | Participants with an observed selected FIT |
+| `pop` | Number of eligible participants with at least one observed FIT at that age (the analytical denominator) |
+| `fit_observed_n` | Participants with an observed selected FIT; equal to `pop` in the released analytical files |
 | `fit_positive_n` | Participants whose selected FIT was at least 100 ng Hb/mL |
 | `colonoscopy_n` | FIT-positive participants with a qualifying colonoscopy |
 | `adenoma_total` | Participants with at least one detected adenoma |

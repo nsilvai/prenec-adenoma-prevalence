@@ -59,6 +59,7 @@ read_intermediate <- function(file_name) {
   stopifnot(all(as.matrix(table[count_columns]) >= 0))
   stopifnot(all(as.matrix(table[count_columns]) == round(as.matrix(table[count_columns]))))
   stopifnot(all(as.matrix(table[setdiff(count_columns, "pop")]) <= table$pop))
+  stopifnot(all(table$fit_observed_n == table$pop))
   as.data.frame(table)
 }
 

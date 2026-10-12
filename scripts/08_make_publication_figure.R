@@ -32,7 +32,7 @@ publication_output_directory <- Sys.getenv(
   unset = file.path(project_directory, "results", "publication")
 )
 
-required_packages <- c("ggplot2", "patchwork", "ragg", "svglite")
+required_packages <- c("ggplot2", "patchwork", "ragg")
 missing_packages <- required_packages[
   !vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)
 ]
@@ -338,15 +338,15 @@ create_outcome_panel <- function(outcome_name, panel_title, x_title) {
 
 adjusted_panel <- create_outcome_panel(
   "Adjusted population detection rate",
-  "(A) Adjusted population detection among both sexes",
-  "Adjusted population detection rate (%)"
+  "(A) Lesion detection under universal colonoscopy among both sexes",
+  "Lesion detection under universal colonoscopy (%)"
 ) +
   theme(legend.position = "none")
 
 prevalence_panel <- create_outcome_panel(
   "Modelled prevalence",
-  "(B) Modelled prevalence among both sexes",
-  "Modelled prevalence (%)"
+  "(B) Prevalence among both sexes",
+  "Prevalence (%)"
 ) +
   theme(strip.text.x = element_blank())
 
@@ -395,7 +395,7 @@ ggsave(
 ggsave(
   filename = file.path(output_dir, paste0(file_stem, ".svg")),
   plot = figure,
-  device = svglite::svglite,
+  device = grDevices::svg,
   width = width_mm / 25.4,
   height = height_mm / 25.4,
   units = "in"

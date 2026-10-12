@@ -15,6 +15,8 @@ The literature-derived parameter workbooks included under `data/parameters/`
 contain no participant-level PRENEC records. Six intermediate A/B workbooks are
 available under `data/intermediate/`; they contain only age-specific population,
 testing-pathway, and detected-lesion counts for both sexes, men, and women, with
-no participant identifiers or individual dates. Simulation objects and all
-other generated result tables are excluded from version control.
+no participant identifiers or individual dates. Disclosure-reviewed manuscript
+figures and their aggregate plot data are available under `manuscript/`.
+Participant-level bootstrap records, bootstrap draws, simulation objects, and
+all other generated result tables are excluded from version control.
 

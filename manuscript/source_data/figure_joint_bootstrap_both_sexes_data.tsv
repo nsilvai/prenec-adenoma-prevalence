@@ -1,0 +1,33 @@
+Population	Estimand	Lesion_key	Lesion	FIT_sensitivity_scenario	Assignment	Plugin_estimate_percent	Percentile_lower_95_percent	Percentile_upper_95_percent
+Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	PRENEC	A	22.3011138521247	15.0184522286039	35.104088933829
+Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	PRENEC	B	21.8876385148758	14.7011815119964	34.4613277729111
+Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	Literature	A	20.4836905402883	16.9488636039587	24.5039815369231
+Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	Literature	B	20.1039112651181	16.5935099745931	24.1211999848163
+Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	PRENEC	A	9.76991561432038	7.37706266514231	13.3776328883429
+Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	PRENEC	B	10.2147197106723	7.72374115633687	13.9913792661714
+Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	Literature	A	9.24518868874307	8.09564837055177	10.6242795823767
+Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	Literature	B	9.66610305101985	8.46478995248791	11.0516701600577
+Both sexes	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	PRENEC	A	31.613864117754	24.9998993567202	40.7646996204332
+Both sexes	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	PRENEC	B	32.4067983539381	25.6697064571845	41.790858581609
+Both sexes	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	Literature	A	35.0558039080841	29.2389950546681	42.2204493499212
+Both sexes	Lesion detection under universal colonoscopy	adenoma_total	Any adenoma	Literature	B	35.9350683659859	30.0555704842994	43.2645325202402
+Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	PRENEC	A	0.299215052892056	0.245477089374798	0.466175198979172
+Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	PRENEC	B	0.280789846473579	0.228913836803236	0.439655332128668
+Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	Literature	A	0.404344666070346	0.311629995654402	0.519674071682219
+Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	Literature	B	0.37944573847781	0.290602959352022	0.488935649459418
+Both sexes	Prevalence	low_risk	Low-risk adenoma	PRENEC	A	27.9312778508504	18.7414508775066	44.0707227801108
+Both sexes	Prevalence	low_risk	Low-risk adenoma	PRENEC	B	27.4134160702348	18.4197235952106	43.346619027603
+Both sexes	Prevalence	low_risk	Low-risk adenoma	Literature	A	25.6550258289956	21.158829309437	30.8124268347687
+Both sexes	Prevalence	low_risk	Low-risk adenoma	Literature	B	25.1793670557562	20.7874330525277	30.3709215588347
+Both sexes	Prevalence	high_risk	High-risk adenoma	PRENEC	A	11.907084654953	8.72485582674461	17.1782893952029
+Both sexes	Prevalence	high_risk	High-risk adenoma	PRENEC	B	12.4491896473819	9.14842545294835	17.8989428757609
+Both sexes	Prevalence	high_risk	High-risk adenoma	Literature	A	11.2675737144056	9.48350379607349	14.1653301325549
+Both sexes	Prevalence	high_risk	High-risk adenoma	Literature	B	11.7805630934304	9.9001157746769	14.8091850950698
+Both sexes	Prevalence	adenoma_total	Any adenoma	PRENEC	A	34.1651584149762	27.0797845674756	44.2192853461924
+Both sexes	Prevalence	adenoma_total	Any adenoma	PRENEC	B	35.0220838351331	27.6402765009508	45.4390437677354
+Both sexes	Prevalence	adenoma_total	Any adenoma	Literature	A	37.8848687848768	31.6297266089926	45.7181926619209
+Both sexes	Prevalence	adenoma_total	Any adenoma	Literature	B	38.8350914271005	32.4390446180498	46.9456150412465
+Both sexes	Prevalence	cancer	Colorectal cancer	PRENEC	A	0.327985731054754	0.267592794531643	0.524843351514337
+Both sexes	Prevalence	cancer	Colorectal cancer	PRENEC	B	0.307788870172962	0.250389157433163	0.490182885811307
+Both sexes	Prevalence	cancer	Colorectal cancer	Literature	A	0.443223960884803	0.339517147507411	0.582375783391772
+Both sexes	Prevalence	cancer	Colorectal cancer	Literature	B	0.415930905639138	0.317980956690332	0.55011863115867

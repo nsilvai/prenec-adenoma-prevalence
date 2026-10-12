@@ -1,0 +1,37 @@
+Assignment	Population	Estimand	Lesion_key	Lesion	FIT_sensitivity_scenario	Source	Share
+A	Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	PRENEC-derived	Screening data	5.02168920784167
+A	Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	PRENEC-derived	FIT sensitivity	94.9783107921583
+A	Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	PRENEC-derived	Colonoscopy sensitivity	0
+A	Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	Literature-based	Screening data	25.9714278167792
+A	Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	Literature-based	FIT sensitivity	74.0285721832208
+A	Both sexes	Lesion detection under universal colonoscopy	low_risk	Low-risk adenoma	Literature-based	Colonoscopy sensitivity	0
+A	Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	PRENEC-derived	Screening data	7.41726719065038
+A	Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	PRENEC-derived	FIT sensitivity	92.5827328093496
+A	Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	PRENEC-derived	Colonoscopy sensitivity	0
+A	Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	Literature-based	Screening data	36.0806604854217
+A	Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	Literature-based	FIT sensitivity	63.9193395145783
+A	Both sexes	Lesion detection under universal colonoscopy	high_risk	High-risk adenoma	Literature-based	Colonoscopy sensitivity	0
+A	Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	PRENEC-derived	Screening data	49.8846745418846
+A	Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	PRENEC-derived	FIT sensitivity	50.1153254581154
+A	Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	PRENEC-derived	Colonoscopy sensitivity	0
+A	Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	Literature-based	Screening data	73.8300321889305
+A	Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	Literature-based	FIT sensitivity	26.1699678110695
+A	Both sexes	Lesion detection under universal colonoscopy	cancer	Colorectal cancer	Literature-based	Colonoscopy sensitivity	0
+A	Both sexes	Prevalence	low_risk	Low-risk adenoma	PRENEC-derived	Screening data	4.9860611118372
+A	Both sexes	Prevalence	low_risk	Low-risk adenoma	PRENEC-derived	FIT sensitivity	94.3044545985172
+A	Both sexes	Prevalence	low_risk	Low-risk adenoma	PRENEC-derived	Colonoscopy sensitivity	0.709484289645621
+A	Both sexes	Prevalence	low_risk	Low-risk adenoma	Literature-based	Screening data	25.0458420868749
+A	Both sexes	Prevalence	low_risk	Low-risk adenoma	Literature-based	FIT sensitivity	71.3902963632943
+A	Both sexes	Prevalence	low_risk	Low-risk adenoma	Literature-based	Colonoscopy sensitivity	3.56386154983073
+A	Both sexes	Prevalence	high_risk	High-risk adenoma	PRENEC-derived	Screening data	5.90403083097191
+A	Both sexes	Prevalence	high_risk	High-risk adenoma	PRENEC-derived	FIT sensitivity	73.6944341995728
+A	Both sexes	Prevalence	high_risk	High-risk adenoma	PRENEC-derived	Colonoscopy sensitivity	20.4015349694553
+A	Both sexes	Prevalence	high_risk	High-risk adenoma	Literature-based	Screening data	16.0588540697496
+A	Both sexes	Prevalence	high_risk	High-risk adenoma	Literature-based	FIT sensitivity	28.4493501972929
+A	Both sexes	Prevalence	high_risk	High-risk adenoma	Literature-based	Colonoscopy sensitivity	55.4917957329575
+A	Both sexes	Prevalence	cancer	Colorectal cancer	PRENEC-derived	Screening data	46.4890592602396
+A	Both sexes	Prevalence	cancer	Colorectal cancer	PRENEC-derived	FIT sensitivity	46.7040099281862
+A	Both sexes	Prevalence	cancer	Colorectal cancer	PRENEC-derived	Colonoscopy sensitivity	6.8069308115742
+A	Both sexes	Prevalence	cancer	Colorectal cancer	Literature-based	Screening data	66.6274708731177
+A	Both sexes	Prevalence	cancer	Colorectal cancer	Literature-based	FIT sensitivity	23.6169308936572
+A	Both sexes	Prevalence	cancer	Colorectal cancer	Literature-based	Colonoscopy sensitivity	9.75559823322504

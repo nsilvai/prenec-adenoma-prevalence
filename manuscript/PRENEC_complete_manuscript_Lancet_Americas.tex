@@ -5,6 +5,7 @@
 \usepackage[a4paper,margin=18mm]{geometry}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\graphicspath{{manuscript/figures/}{figures/}}
 \usepackage{microtype}
 \usepackage{booktabs,threeparttable,tabularx,array,longtable}
 \usepackage{float}
@@ -48,31 +49,34 @@ adenoma, high-risk adenoma, and colorectal cancer.
 \textbf{Methods}\quad
 Routinely collected records were analysed for public-insurance beneficiaries
 aged 50--75 years enrolled in eight regions during 2012--2022. Participants
-without a reported family history of colorectal cancer formed the target
-population. One available OC-Sensor faecal immunochemical test (FIT) was
-randomly selected per person and classified as positive at $\geq100$ ng Hb/mL.
+without a reported family history of colorectal cancer and with at least one
+recorded OC-Sensor faecal immunochemical test (FIT) formed the analytical
+population. One available FIT was randomly selected per person and classified
+as positive at $\geq100$ ng Hb/mL.
 Observed detection was corrected for lesion-specific FIT sensitivity and
 colonoscopy participation; prevalence was additionally corrected for
-colonoscopy sensitivity. PRENEC-derived and literature-based FIT sensitivities
-defined two scenarios. Uncertainty was propagated through 10\,000 Monte Carlo
-iterations.
+colonoscopy sensitivity. Two sets of lesion-specific FIT-sensitivity inputs
+were used: PRENEC-derived estimates and literature-based estimates. Uncertainty
+was propagated through 10\,000 stratified participant-bootstrap replicates
+with separate sensitivity draws.
 
 \textbf{Findings}\quad
-Among 34\,241 participants, 25\,014 (73\dec{}1\%) were women. PRENEC-derived
+Among 31\,104 analytical participants, 22\,837 (73\dec{}4\%) were women. PRENEC-derived
 FIT sensitivity was 7\dec{}0\% for low-risk adenoma,
 21\dec{}8\% for high-risk adenoma, and 100\dec{}0\% for colorectal cancer.
-In assignment A, adjusted population detection was 20\dec{}9\%
-(95\% HPD interval 9\dec{}0--35\dec{}1), 9\dec{}0\%
-(4\dec{}9--13\dec{}7), and 0\dec{}271\% (0\dec{}040--0\dec{}558),
-respectively. Corresponding modelled prevalence was 26\dec{}1\%
-(11\dec{}5--44\dec{}2), 11\dec{}1\% (5\dec{}7--17\dec{}1), and
-0\dec{}300\% (0\dec{}049--0\dec{}623). Literature-based estimates were
-23\dec{}6\%, 10\dec{}4\%, and 0\dec{}408\%; assignment B was similar.
+In assignment A, lesion detection under universal colonoscopy was 22\dec{}3\%
+(95\% interval 15\dec{}0--35\dec{}1), 9\dec{}8\%
+(7\dec{}4--13\dec{}4), and 0\dec{}299\% (0\dec{}245--0\dec{}466),
+respectively. Corresponding prevalence was 27\dec{}9\%
+(18\dec{}7--44\dec{}1), 11\dec{}9\% (8\dec{}7--17\dec{}2), and
+0\dec{}328\% (0\dec{}268--0\dec{}525). Literature-based prevalence estimates
+were 25\dec{}7\%, 11\dec{}3\%, and 0\dec{}443\%; assignment B was similar.
 
 \textbf{Interpretation}\quad
 Modelled adenoma prevalence was substantial, whereas colorectal cancer
-prevalence was below 1\%. Estimates were stable across FIT-sensitivity
-scenarios, but uncertainty and transportability assumptions remain important.
+prevalence was below 1\%. Estimates were similar with PRENEC-derived and
+literature-based FIT sensitivity, but uncertainty and transportability
+assumptions remain important.
 
 \textbf{Funding}\quad
 Funding information is reported separately in the submission metadata.
@@ -92,8 +96,8 @@ This study used a large public-sector screening cohort from eight Chilean
 regions and explicitly separated three quantities: lesion yield among
 colonoscopy completers, population detection after correction for FIT
 sensitivity and colonoscopy participation, and prevalence after additional
-correction for colonoscopy sensitivity. PRENEC-derived and external FIT
-sensitivity inputs were compared, and all principal sources of parameter
+correction for colonoscopy sensitivity. PRENEC-derived and literature-based
+FIT-sensitivity inputs were compared, and all principal sources of parameter
 uncertainty, including colonoscopy participation, were propagated.
 
 \Needspace{7\baselineskip}
@@ -148,7 +152,7 @@ adenoma, and colorectal cancer, and the population detection expected under
 universal colonoscopy, among PRENEC participants without a family history of
 colorectal cancer. A probabilistic framework linked observed detection to
 FIT sensitivity, colonoscopy participation, and colonoscopy sensitivity.
-Analyses used PRENEC-derived and literature-derived FIT sensitivities and
+Analyses used PRENEC-derived and literature-based FIT sensitivities and
 were conducted for both sexes combined and separately for women and men.
 
 \section*{Methods}
@@ -163,23 +167,21 @@ March, 2023. The estimands pertained to the eligible PRENEC population and
 were not interpreted as nationally representative.
 
 Participants without a reported family history of colorectal cancer formed
-the target screening population. Participants with a family history were
-excluded from the target prevalence denominator but provided an internal
-cohort for estimating FIT sensitivity because colonoscopy was offered
-irrespective of FIT results. The target-population denominator, $N$, included
-all eligible participants aged 50--75 years without a family history,
-irrespective of whether a FIT result was recorded. No additional correction
-for FIT coverage was applied.
+the source screening cohort. The analytical target population additionally
+required at least one recorded FIT result, because participants without a FIT
+could not enter the observed detection pathway. Participants with a family
+history were excluded from the target prevalence denominator but provided an
+internal cohort for estimating FIT sensitivity because colonoscopy was offered
+irrespective of FIT results. No extrapolation from participants with a recorded
+FIT to those without one was attempted.
 
 PRENEC supplied two OC-Sensor FIT kits. Under the programme protocol,
-colonoscopy was offered if either result was at least 100 ng Hb/mL. The
-descriptive programme analysis therefore used positivity in either round. For
-the modelled single-sample strategy, one available FIT result was randomly
-selected per participant. Participants without an available FIT remained in
-$N$ but could not enter the detected pathway.
+colonoscopy was offered if either result was at least 100 ng Hb/mL. In the
+present study, this criterion was applied only to descriptive programme-level
+analyses; for the modelled analyses, one available FIT result was randomly
+selected for each participant to determine FIT positivity.
 
-Two complementary FIT assignments, A and B, were generated using the
-prespecified seed 20260923. When two results were available, one was allocated
+Two complementary FIT assignments, A and B, were generated. When two results were available, one was allocated
 to A at random and the other to B; when only one result was available, both
 assignments used it. The assignments contained the same participants and
 were not independent samples. Assignment A was prespecified for narrative
@@ -190,99 +192,52 @@ A qualifying colonoscopy occurred from the first colonoscopy-check date
 date was missing, no upper boundary was applied. The first qualifying
 colonoscopy was used.
 
-These eligibility, FIT-selection, and colonoscopy-window definitions specified
-the observed detection pathway. The observed population detection rate was
-then corrected for FIT sensitivity and colonoscopy participation to estimate
-adjusted population detection, and for colonoscopy sensitivity to estimate
-modelled lesion prevalence. The following sections define the lesion categories
-and target quantities, specify the model inputs, and describe uncertainty
-propagation.
 
-\subsection*{Lesion ascertainment and outcomes}
 
-Colonoscopic findings were described with the Paris classification, and
-histopathological findings were classified according to the Vienna
-classification and the standardised PRENEC pathology
-protocol.\cite{Paris2003,Vienna2000,Ito2016,Okada2016} Analyses were
-person-level and required colonoscopic detection with histological
-confirmation. When several lesions were identified, PRENEC retained the
-characteristics of the lesion with the highest recorded risk.
+\subsection*{Target quantities}
+The study aimed to estimate lesion prevalence in the average-risk population and lesion detection under universal colonoscopy. Let $N$ denote age-eligible participants without a family history of colorectal cancer who had at least one available FIT result. The target quantities were defined as follows:
 
-The publication analysis considered low-risk adenoma, high-risk adenoma, and
-colorectal cancer. Low-risk adenomas were tubular adenomas with low-grade
-dysplasia smaller than 10 mm. High-risk lesions comprised tubular adenomas
-with low-grade dysplasia measuring at least 10 mm; tubular adenomas with
-high-grade dysplasia; tubulovillous adenomas with low-grade or high-grade
-dysplasia; villous adenomas with high-grade dysplasia; and intramucosal
-carcinoma. Colorectal cancer comprised well, moderately, or poorly
-differentiated invasive adenocarcinoma. Adenoma number did not enter the risk
-classification. External advanced-adenoma evidence was used only as an
-explicit proxy where stated.
+\textit{Lesion prevalence.}\quad Let $N_j$ denote the unobserved number of participants with at least one true lesion of category $j$. Following figure~\ref{fig:pathway}, $L_j$ denoted true lesion presence and prevalence corresponds to
+\begin{equation*}
+p_j=\frac{N_j}{N}=\Pr(L_j).
+\end{equation*}
 
-\subsection*{Target quantities and detection pathway}
-
-For lesion category $j$, $p_j$ denoted the probability that a participant in
-the target population had at least one true lesion of category $j$. Let
-$D_j$ denote the observed number of participants whose selected FIT was
-positive, who completed colonoscopy in the prespecified window, and in whom
-at least one lesion of category $j$ was histologically confirmed. The
-observed programme detection rate for the single-FIT pathway was
-
+\textit{Lesion detection under universal colonoscopy.}\quad Let $R_j$ denote the counterfactual expected number of participants in whom a lesion of category $j$ would be detected if all underwent colonoscopy. Its corresponding person-level detection rate is $r_j$:
 \begin{equation}
-d_j=\frac{D_j}{N}.
-\label{eq:d}
+R_j=N\,p_j\,\Se_{\mathrm{COL},j},
+\qquad
+r_j=\frac{R_j}{N}=p_j\,\Se_{\mathrm{COL},j},
+\label{eq:truer}
 \end{equation}
+where $\Se_{\mathrm{COL},j}$ denotes colonoscopy sensitivity for category $j$.
 
-The sequential pathway was represented as
+Lesion prevalence, $p_j$, cannot be determined directly even when all participants undergo colonoscopy, because imperfect colonoscopy sensitivity leaves some lesions undetected. Estimating prevalence therefore requires correction for colonoscopy sensitivity. In PRENEC, estimating prevalence presents an additional challenge: $R_j$ cannot be observed directly because not all average-risk participants underwent colonoscopy. Its estimation requires correction for FIT sensitivity and adherence to colonoscopy after a positive FIT.
 
-\begin{equation}
-d_j=\frac{D_j}{N}
-=p_j\,\Se_{\mathrm{FIT},j}\,
+\subsection*{Detection pathway}
+Figure~\ref{fig:pathway} describes the pathway through which a lesion was detected in PRENEC. Let $D_j$ denote the target count for the FIT-based pathway and $d_j$ its population detection probability:
+\begin{equation*}
+d_j=\frac{D_j}{N}.
+\end{equation*}
+Participants contributed to this pathway if they had at least one true lesion of category $j$, their selected FIT was positive, colonoscopy was completed, and the lesion was detected with histological confirmation. All counts were person-level.
+
+The FIT--colonoscopy--histology pathway was treated as a conditional sequential-testing process in which the performance of the complete sequence is determined by stage-specific probabilities among participants reaching each subsequent stage.\cite{Fanshawe2024} Consistent with this framework, the detection pathway and its relation to prevalence are:
+\begin{align*}
+d_j&=p_j\,\Se_{\mathrm{FIT},j}\,
 \bigl(\Adh\mid\Se_{\mathrm{FIT},j}\bigr)\,
 \bigl(\Se_{\mathrm{COL},j}\mid\Adh,\Se_{\mathrm{FIT},j}\bigr),
-\label{eq:conditional}
-\end{equation}
+\\
+p_j&=\frac{d_j}
+{\Se_{\mathrm{FIT},j}\,
+\bigl(\Adh\mid\Se_{\mathrm{FIT},j}\bigr)\,
+\bigl(\Se_{\mathrm{COL},j}\mid\Adh,\Se_{\mathrm{FIT},j}\bigr)}.
+\end{align*}
+Here, $\Se_{\mathrm{FIT},j}$ was the probability of a positive selected FIT at the 100 ng Hb/mL threshold among participants with at least one true lesion of category $j$. $\Adh$ was the probability of completing colonoscopy after a positive selected FIT. $\Se_{\mathrm{COL},j}$ was the probability of detecting at least one lesion of category $j$ at colonoscopy among participants with a true lesion of that category. The conditional term $(\Adh\mid\Se_{\mathrm{FIT},j})$ represented adherence after FIT selection; $(\Se_{\mathrm{COL},j}\mid\Adh,\Se_{\mathrm{FIT},j})$ represented colonoscopy sensitivity after selection through FIT positivity and colonoscopy completion.
 
-where $\Se_{\mathrm{FIT},j}$ was the person-level sensitivity of the selected
-FIT for lesion category $j$, $\Adh$ was colonoscopy participation conditional
-on a positive selected FIT, and $\Se_{\mathrm{COL},j}$ was person-level
-colonoscopy sensitivity for detecting at least one lesion of category $j$.
-This factorisation described successive conditional stages; it did not
-require unconditional independence between them.\cite{Fanshawe2024}
-
-The model assumed that colonoscopy participation did not vary with FIT
-sensitivity and that colonoscopy sensitivity did not vary with either FIT
-sensitivity or colonoscopy participation:
-
-\begin{align}
-\bigl(\Adh\mid\Se_{\mathrm{FIT},j}\bigr)&=\Adh,\\
-\bigl(\Se_{\mathrm{COL},j}\mid\Adh,\Se_{\mathrm{FIT},j}\bigr)
-&=\Se_{\mathrm{COL},j}.
-\end{align}
-
-The plausibility of these assumptions and the robustness of the estimates to
-potential departures from them are considered in the Discussion.
-
-Within sex and age strata, observed colonoscopy participation was assumed to
-represent participation among lesion carriers. FIT sensitivity from the
-internal cohort or literature and colonoscopy sensitivity from external
-evidence were assumed transportable to the target population. Lesion
-definitions and units of analysis were assumed sufficiently comparable.
-Colonoscopy plus histological ascertainment was treated as effectively
-specific. Under these assumptions,
-
-\begin{equation}
-d_j=p_j\,\Se_{\mathrm{FIT},j}\,\Adh\,\Se_{\mathrm{COL},j}.
-\label{eq:pathway}
-\end{equation}
-
-Figure~\ref{fig:pathway} summarises the observed and counterfactual pathways,
-the target quantities, and the conditional-independence assumptions.
 
 \begin{figure}[p]
 \centering
-\includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]
-  {output/pdf/prenec_probability_tree.pdf}
+\includegraphics[width=\textwidth,height=0.84\textheight,keepaspectratio]
+  {prenec_probability_tree.pdf}
 \caption{\textbf{Person-level lesion-detection pathway for category $j$.}
 The solid path represents observed detection through the selected FIT,
 colonoscopy participation, and colonoscopy sensitivity. The dashed path
@@ -290,139 +245,163 @@ represents the counterfactual expected count under universal colonoscopy.
 Lower-case symbols denote rates or probabilities and upper-case symbols
 denote counts. Hats are omitted throughout the diagram. FIT=faecal
 immunochemical test; $\Adh$=colonoscopy participation after a positive
-selected FIT.}
+selected FIT. The lower panels list the lesion categories analysed and define
+the three study measures.}
 \label{fig:pathway}
 \end{figure}
 
-\subsection*{Adjusted population detection and prevalence}
 
-Let $R_j$ denote the expected number of participants in whom lesion category
-$j$ would be detected if all members of the target population underwent
-colonoscopy of the quality represented by the model. The adjusted population
-detection rate was
 
+
+\subsection*{Identification assumptions}
+The principal identification assumption was conditional independence between the successive components of the detection pathway. Within each sex and age stratum, colonoscopy adherence was assumed not to vary with lesion-specific FIT sensitivity, and colonoscopy sensitivity was assumed not to vary with either adherence or FIT sensitivity:
+\begin{align*}
+\bigl(\Adh\mid\Se_{\mathrm{FIT},j}\bigr)&=\Adh,\\
+\bigl(\Se_{\mathrm{COL},j}\mid\Adh,\Se_{\mathrm{FIT},j}\bigr)&=\Se_{\mathrm{COL},j}.
+\end{align*}
+These assumptions allowed the conditional pathway probabilities in figure~\ref{fig:pathway} to be replaced by the corresponding adherence and colonoscopy-sensitivity inputs, giving
+\begin{equation*}
+d_j=p_j\,\Se_{\mathrm{FIT},j}\,\Adh\,\Se_{\mathrm{COL},j}.
+\end{equation*}
+
+
+Several additional assumptions were required. Within each sex and age stratum, measured adherence among selected-FIT-positive participants was assumed applicable to those with a true lesion. Colonoscopy sensitivity was assumed applicable both to FIT-selected examinations and to universal colonoscopy. FIT-sensitivity estimates were assumed transportable from the family-history cohort or published studies to the average-risk target population, and colonoscopy-sensitivity estimates were assumed transportable from the source studies to PRENEC; these assumptions required sufficiently comparable screening procedures and lesion definitions. The plausibility of these assumptions and the implications of potential departures from them are considered in the Discussion.
+
+
+\subsection*{Estimators of prevalence and population detection}
+Given the assumptions described above, both target quantities could be recovered from FIT-based screening data such as PRENEC.
+
+\textit{Lesion prevalence.}\quad Prevalence was estimated from the empirical detection proportion. Under the identification assumptions, the empirical analogue of the detection pathway was
 \begin{equation}
-r_j=\frac{R_j}{N}
-=p_j\,\Se_{\mathrm{COL},j}
-=\frac{d_j}{\Se_{\mathrm{FIT},j}\,\Adh}.
-\label{eq:r}
+d_j=\frac{ D_j}{N}
+= p_j\,\Se_{\mathrm{FIT},j}\,\Adh\,\Se_{\mathrm{COL},j}.
+\label{eq:dhat}
 \end{equation}
-
-This quantity corrects for FIT sensitivity and colonoscopy participation but
-retains lesions missed by colonoscopy. Modelled lesion prevalence was
-
+Solving equation~\eqref{eq:dhat} for prevalence can be written as \footnote{Equation~\eqref{eq:p} can be interpreted as the sequential-testing analogue of the Rogan--Gladen estimator, which recovers true prevalence from an observed positive proportion by correcting for imperfect sensitivity and specificity.\cite{RoganGladen1978} In the present setting, the ``test'' was the complete FIT-positive, colonoscopy-completed, and histologically confirmed pathway. Because this complete pathway was assumed to have effectively perfect specificity, the Rogan--Gladen expression reduces to equation~\eqref{eq:p}. The derivation is provided in the supplementary methods.
+}
 \begin{equation}
-p_j=
-\frac{d_j}
-{\Se_{\mathrm{FIT},j}\,\Adh\,\Se_{\mathrm{COL},j}}
-=\frac{r_j}{\Se_{\mathrm{COL},j}}.
+ p_j=\frac{ d_j}{\Se_{\mathrm{FIT},j}\,\Adh\,\Se_{\mathrm{COL},j}}.
 \label{eq:p}
 \end{equation}
 
-The observed colonoscopy detection rate in the selected-FIT pathway was
 
-\begin{equation}
-\mathrm{cdr}_j=\frac{D_j}{C},
-\end{equation}
 
-where $C$ was the number of selected-FIT-positive participants completing
-colonoscopy. This descriptive rate received no sensitivity correction.
-The relation of equation~\eqref{eq:p} to the Rogan--Gladen correction is
-shown in the Supplementary Methods.\cite{RoganGladen1978}
+
+\textit{Lesion detection under universal colonoscopy.}\quad Equation~\eqref{eq:truer} gives $r_j=p_j\Se_{\mathrm{COL},j}$. Replacing $p_j$ in equation~\eqref{eq:truer} with its estimator from equation~\eqref{eq:p} yields the FIT- and colonoscopy-participation-adjusted population detection rate:
+\begin{equation*}
+r_j= p_j\,\Se_{\mathrm{COL},j}
+=\frac{ d_j}{\Se_{\mathrm{FIT},j}\,\Adh}.
+\end{equation*}
+This rate retained losses from imperfect colonoscopy sensitivity. The corresponding estimated count under universal colonoscopy was $\widehat R_j=N\widehat r_j$.
+
+\textit{Observed colonoscopy detection rate.}\quad Additionally, the observed colonoscopy detection rate among participants completing the examination was estimated as
+\begin{equation*}
+\mathrm{CDR}_j=\frac{D_j}{C},
+\end{equation*}
+where $C$ was the number of selected-FIT-positive participants who completed colonoscopy. This descriptive measure summarised findings among colonoscopy completers without sensitivity or adherence correction. The framework was applied separately to each lesion category for both sexes combined, women, and men (figure~\ref{fig:pathway}).
+
+
+
+\subsection*{Information sources}
+\paragraph{Lesion ascertainment and classification.}
+Lesions were characterised using the Paris endoscopic classification and assessed histologically according to the Vienna classification and the standardised PRENEC pathological protocol\cite{Paris2003,Vienna2000,Ito2016,Okada2016}. Analyses were conducted at patient level because PRENEC recorded the characteristics of the highest-risk lesion when multiple lesions were identified. Adenomas were identified histologically and classified by recorded size, histological type, and grade of dysplasia; colorectal cancer was identified from the recorded histopathological cancer diagnosis.
+
+Outcomes comprised any adenoma; small (1--5 mm), medium (6--9 mm), and large ($\geq10$ mm) adenomas; non-advanced/low-risk and advanced/high-risk adenomas; and colorectal cancer. Any adenoma was identified directly from the patient record; category sums were consistency checks. Size and risk classifications referred to the highest-risk recorded lesion. The programme's high-risk category included adenomas larger than 1 cm irrespective of histology, villous adenomas, tubular adenomas with high-grade dysplasia, and intramucosal carcinoma. Low-risk lesions were tubular adenomas smaller than 1 cm with low-grade dysplasia. Adenoma number did not enter risk classification.
+
+\paragraph{FIT sensitivity.}
+Although sensitivity is commonly treated as a characteristic of the test and, unlike predictive values, is not determined directly by disease prevalence, it is not necessarily invariant across populations or implementation settings because patient spectrum and test execution can affect diagnostic accuracy.\cite{Cohen2016} For FIT, pre-analytical conditions such as sample transport and ambient temperature may reduce sensitivity through degradation of faecal haemoglobin.\cite{Doubeni2016} PRENEC-derived sensitivities were therefore retained alongside literature-based estimates to represent performance under local programme conditions as well as external evidence.
+
+PRENEC-derived patient-level sensitivities were estimated in participants with a family history who had FIT and colonoscopy results. Because colonoscopy was offered irrespective of FIT positivity, eligibility for verification was not restricted to FIT-positive participants. For each lesion category, sensitivity was the proportion with a positive randomly selected FIT among those classified in that category at colonoscopy, with 95\% Wilson confidence intervals. Applying these sensitivities to the average-risk population assumed transportability between the two groups.
+
+The alternative analysis used literature-based FIT sensitivities. A published meta-analysis supplied estimates for advanced adenoma and colorectal cancer\cite{Lin2021}. In the absence of suitable pooled estimates for any adenoma, low-risk adenoma, and adenoma size categories, de novo meta-analyses used study-level information identified in systematic reviews. Synthesis models and available inputs are summarised in supplementary table S2. This analysis replaced only the corresponding outcome-specific FIT sensitivity; other inputs remained unchanged. Thresholds were retained in their original units without assuming equivalence between ng Hb/mL and $\mu$g Hb/g faeces.
+
+
+
+\paragraph{Colonoscopy sensitivity.}
+Colonoscopy sensitivities were informed by published diagnostic-accuracy evidence, including tandem-colonoscopy studies\cite{Martin2013,vanRijn2006,Zhao2023}. Where evidence did not correspond directly to PRENEC's patient-level categories, indirect size mappings or explicit proxies were used (supplementary table S1). These inputs were used to estimate prevalence from the adjusted population detection rate, not to correct the observed colonoscopy detection rate.
+
+\paragraph{Colonoscopy adherence.}
+Adherence was estimated in the average-risk population as the proportion of selected-FIT-positive participants who completed colonoscopy:
+\begin{equation*}
+\Adh=\frac{C}{F^+},
+\end{equation*}
+where $F^+$ denoted participants positive on the selected FIT. Estimates were
+calculated separately by FIT assignment, sex, and age group (50--54, 55--59,
+60--64, 65--69, 70--74, and 75 years). Wilson intervals were descriptive.
+
+
+\subsection*{Statistical analysis}
+
+All quantities were estimated for both sexes combined and separately for women
+and men. Age-specific observed detection was corrected for colonoscopy
+participation and aggregated using the age distribution of the analytical
+population. Assignment A was used for primary reporting and assignment B as a
+paired robustness analysis.
+
+Sampling uncertainty in the screening programme data was quantified using
+10\,000 non-parametric participant-bootstrap replicates stratified by sex and
+age group. In each bootstrap replicate, FIT positivity, colonoscopy
+participation ($C^{(b)}/F^{+(b)}$), and lesion detection were recalculated from
+the resampled participants, and the participation correction was applied using
+these replicate-specific counts. Resampling participants in this
+way also respected the sequential structure of the observed pathway: lesion
+detections occurred among colonoscopy completers, who were themselves a subset
+of FIT-positive participants. The algebraic equivalence between the explicit
+participation correction and an expression based on FIT positivity and lesion
+yield among colonoscopy completers, together with full bootstrap details, is
+provided in the Supplementary Methods.
+
+The same participant resamples were used for both FIT assignments, all lesion
+categories, both sexes-combined and sex-specific estimates, and both sources
+of FIT sensitivity. FIT- and colonoscopy-sensitivity draws were
+generated independently of the participant resamples and of one another from
+their prespecified uncertainty distributions.
+
+Point estimates were plug-in estimates obtained from the observed counts and
+point sensitivity estimates. Ninety-five percent uncertainty intervals were
+the 2\dec{}5th and 97\dec{}5th percentiles of the joint uncertainty
+distribution; simulated estimates were not truncated at 1. To quantify the
+relative contribution of each uncertainty source, separate runs varied the
+screening data, FIT sensitivity, or colonoscopy sensitivity. Contributions
+were expressed as percentages of the additive component variances on the
+logarithmic scale; the derivation is provided in the Supplementary Methods and
+results are shown in figure~\ref{fig:variance}.
+Seeds were prespecified for FIT
+selection, participant resampling, and sensitivity draws. Analyses were
+performed in R and structured for reporting with STROBE and RECORD; parameter
+provenance followed relevant GATHER principles.\cite{STROBE2007,RECORD2015,GATHER2016}
+
 
 \begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth,height=0.84\textheight,keepaspectratio]
-  {output/pdf/prenec_methodology_framework.pdf}
+  {prenec_methodology_framework.pdf}
 \caption{\textbf{PRENEC information sources and population estimators.}
 The target population provided $D_j$, $d_j$, and $\Adh$; the
-family-history cohort provided PRENEC-derived FIT sensitivity. External
-evidence supplied an alternative FIT-sensitivity scenario and
-lesion-specific colonoscopy sensitivity. The framework was applied
-separately to low-risk adenoma, high-risk adenoma, and colorectal cancer, for
-both sexes combined, women, and men.}
+family-history cohort provided PRENEC-derived FIT sensitivity. Published
+evidence supplied literature-based FIT and lesion-specific colonoscopy
+sensitivities.}
 \label{fig:framework}
 \end{figure}
 
-Figure~\ref{fig:framework} summarises the two analytic populations and the
-source of each empirical or external model input.
 
-\subsection*{Model inputs}
 
-\textit{FIT sensitivity.}\quad
-PRENEC-derived sensitivity was estimated in participants with a family
-history who had an evaluable FIT and colonoscopy. For each lesion category,
-sensitivity was the proportion with a positive randomly selected FIT among
-participants classified in that category at colonoscopy. Wilson intervals
-were used descriptively. The external low-risk adenoma estimate came from a
-four-study random-effects meta-analysis of OC-Sensor data at the programme
-threshold.\cite{Park2010,Redwood2016,Chang2017,Imperiale2014} Published
-OC-Sensor estimates from Lin and colleagues were used for colorectal cancer
-and, with advanced adenoma as an explicit proxy, for high-risk
-adenoma.\cite{Lin2021}
 
-\textit{Colonoscopy sensitivity.}\quad
-External diagnostic-accuracy and tandem-colonoscopy evidence informed
-colonoscopy sensitivity.\cite{Martin2013,vanRijn2006,Zhao2019,Zhao2023}
-The low-risk input was a composite proxy combining size and histology
-evidence; the high-risk input used the patient-level advanced-adenoma result
-from Zhao and colleagues as an explicit proxy for the PRENEC high-risk
-category; and the colorectal cancer input used 52 detected cancers among 57
-patients from the Martin-Lopez/AETSA synthesis. These parameters were used
-only in equation~\eqref{eq:p}, not in $\mathrm{cdr}_j$ or $r_j$.
 
-\textit{Colonoscopy participation.}\quad
-For each complementary assignment, sex, and age group, participation was
 
-\begin{equation}
-\Adh=\frac{C}{F^+},
-\end{equation}
 
-where $F^+$ was the number positive on the selected FIT and $C$ the number
-completing colonoscopy in the prespecified window. Age groups were 50--54,
-55--59, 60--64, 65--69, 70--74, and 75 years.
-
-\subsection*{Statistical analysis}
-
-All quantities were estimated for both sexes combined and separately for
-women and men. Age-specific lesion-detection draws were corrected with the
-corresponding age-group colonoscopy-participation draws and then weighted by
-the age distribution of the target population. Results were reported for
-assignment A, with assignment B displayed as a paired robustness analysis.
-
-Uncertainty was propagated through 10\,000 Monte Carlo iterations. Within age
-$e$, observed detection was represented by
-$\BetaDist(D_{j,e},N_e-D_{j,e})$ without pseudocounts. A shared uniform
-quantile was applied across ages within each lesion and iteration, preserving
-the implemented rank dependence. PRENEC-derived FIT sensitivity followed
-$\BetaDist(\mathrm{TP}_j+0\dec5,\mathrm{FN}_j+0\dec5)$, except that the
-PRENEC cancer sensitivity was fixed at 1\dec0. Colonoscopy participation was
-sampled from
-$\BetaDist(C_e+0\dec5,F^+_e-C_e+0\dec5)$ for each age group; the same
-participation quantiles were reused across lesion categories and FIT
-sensitivity scenarios. Colonoscopy sensitivities followed the beta
-distributions in the parameter workbook. Published pooled FIT estimates used
-moment-matched beta distributions, and the de novo low-risk meta-analysis
-used a Hartung--Knapp-calibrated logit-normal distribution.
-
-Simulated proportions were not truncated at 1. Point estimates were
-simulation means and uncertainty was summarised with 95\% highest posterior
-density (HPD) intervals. Seeds were prespecified for FIT selection, model
-simulation, colonoscopy sensitivity, external FIT sensitivity, and
-colonoscopy participation. Analyses were performed in R and structured for
-reporting with STROBE and RECORD; parameter provenance followed relevant
-GATHER principles.\cite{STROBE2007,RECORD2015,GATHER2016}
 
 \clearpage
 \section*{Results}
 
 \subsection*{Study population and screening outcomes}
 
-The target population comprised 34\,241 PRENEC participants aged 50--75
-years without a reported family history of colorectal cancer; 25\,014
-(73\dec{}1\%) were women and mean age was 60\dec{}8 years (95\% CI
-60\dec{}7--60\dec{}8; table~\ref{tab:screening}). Both FIT rounds were
-recorded for 31\,095 (90\dec{}8\%) participants. A concentration at or above
+The source cohort comprised 34\,241 PRENEC participants aged 50--75 years
+without a reported family history of colorectal cancer; 25\,014 (73\dec{}1\%)
+were women and mean age was 60\dec{}8 years (95\% CI 60\dec{}7--60\dec{}8;
+table~\ref{tab:screening}). Of these, 31\,104 participants had at least one
+recorded FIT and formed the analytical population; 22\,837 (73\dec{}4\%) were
+women. Both FIT rounds were recorded for 31\,095 participants. A concentration at or above
 100 ng Hb/mL was recorded in 8\dec{}8\% in round 1 and 8\dec{}9\% in round
 2; concentrations were higher among men.
 
@@ -451,7 +430,9 @@ colorectal cancer}
  & \textbf{Both sexes} & \textbf{Women} & \textbf{Men}\\
 \midrule
 \textit{\textbf{Participants}} & & &\\
-Participants, n & 34\,241 & 25\,014 & 9\,227\\
+Source cohort, n & 34\,241 & 25\,014 & 9\,227\\
+Analytical population with $\geq1$ recorded FIT, n &
+31\,104 & 22\,837 & 8\,267\\
 Age, years, mean (95\% CI) & 60\dec{}8 (60\dec{}7--60\dec{}8) &
 60\dec{}5 (60\dec{}4--60\dec{}6) &
 61\dec{}5 (61\dec{}4--61\dec{}7)\\
@@ -517,7 +498,8 @@ Colorectal cancer, n/N (\%) &
 \scriptsize
 \item[] Data are n/N (\%) or mean (95\% CI). FIT-round denominators are
 participants with a recorded result in that round. Both-round completion uses
-the full target population.
+the full source cohort; modelled analyses use the analytical population with at
+least one recorded FIT.
 \item[] Colonoscopy participation used participants with at least one FIT
 $\geq100$ ng Hb/mL. Quality and lesion yield used all 3\,434 qualifying first
 colonoscopies; one occurred outside the programme-positive subgroup.
@@ -540,9 +522,9 @@ cancer in the internal cohort had a positive selected FIT, yielding a point
 estimate of 100\dec{}0\% with a wide Wilson interval
 (61\dec{}0--100\dec{}0).
 
-External FIT sensitivities were similar for both adenoma categories:
+Literature-based FIT sensitivities were similar for both adenoma categories:
 7\dec{}6\% for low-risk adenoma and 23\dec{}0\% for high-risk adenoma
-(table~\ref{tab:external}). For colorectal cancer, the external estimate was
+(table~\ref{tab:external}). For colorectal cancer, the literature-based estimate was
 74\dec{}0\%, lower than the PRENEC point estimate but within its wide
 confidence interval. External colonoscopy sensitivity ranged from
 79\dec{}8\% to 91\dec{}2\%; the lesion-specific sources included explicit
@@ -579,7 +561,7 @@ with the Wilson method. The fixed FIT-selection seed was 20260923.
 
 \begin{table}[p]
 \centering
-\caption{External FIT and colonoscopy sensitivity inputs used in the
+\caption{Literature-based FIT and colonoscopy sensitivity inputs used in the
 prevalence models}
 \label{tab:external}
 \begin{threeparttable}
@@ -590,7 +572,7 @@ prevalence models}
 L{0.20\linewidth}L{0.18\linewidth}Y@{}}
 \toprule
 \textbf{Lesion category} &
-\textbf{External FIT sensitivity, \% (95\% CI)} &
+\textbf{Literature-based FIT sensitivity, \% (95\% CI)} &
 \textbf{FIT evidence} &
 \textbf{External colonoscopy sensitivity, \% (95\% CI)} &
 \textbf{Colonoscopy evidence}\\
@@ -636,27 +618,28 @@ adenoma, 23\dec{}9\% for high-risk adenoma, and 3\dec{}36\% for colorectal
 cancer; assignment B estimates were 17\dec{}1\%, 25\dec{}0\%, and
 3\dec{}15\%, respectively.
 
-Using PRENEC-derived FIT sensitivity, adjusted population detection in
-assignment A was 20\dec{}9\% (95\% HPD interval 9\dec{}0--35\dec{}1) for
-low-risk adenoma, 9\dec{}0\% (4\dec{}9--13\dec{}7) for high-risk adenoma,
-and 0\dec{}271\% (0\dec{}040--0\dec{}558) for colorectal cancer
+Using PRENEC-derived FIT sensitivity, lesion detection under universal
+colonoscopy in assignment A was 22\dec{}3\% (95\% interval
+15\dec{}0--35\dec{}1) for low-risk adenoma, 9\dec{}8\%
+(7\dec{}4--13\dec{}4) for high-risk adenoma, and 0\dec{}299\%
+(0\dec{}245--0\dec{}466) for colorectal cancer
 (table~\ref{tab:modelled}; figure~\ref{fig:modelled}). After additional
-correction for colonoscopy sensitivity, modelled prevalence was 26\dec{}1\%
-(11\dec{}5--44\dec{}2), 11\dec{}1\% (5\dec{}7--17\dec{}1), and
-0\dec{}300\% (0\dec{}049--0\dec{}623), respectively.
+correction for colonoscopy sensitivity, prevalence was 27\dec{}9\%
+(18\dec{}7--44\dec{}1), 11\dec{}9\% (8\dec{}7--17\dec{}2), and
+0\dec{}328\% (0\dec{}268--0\dec{}525), respectively.
 
-Literature-derived FIT sensitivity produced slightly lower estimates for both
-adenoma categories and a higher estimate for colorectal cancer. Modelled
-prevalence was 23\dec{}6\% for low-risk adenoma, 10\dec{}4\% for high-risk
-adenoma, and 0\dec{}408\% for colorectal cancer. Differences between
-complementary assignments were small relative to the uncertainty intervals:
-for both sexes, the largest difference in mean modelled prevalence was
-0\dec{}53 percentage points.
+Literature-based FIT sensitivity produced slightly lower estimates for both
+adenoma categories and a higher estimate for colorectal cancer. Prevalence was
+25\dec{}7\% for low-risk adenoma, 11\dec{}3\% for high-risk adenoma, and
+0\dec{}443\% for colorectal cancer. Differences between complementary
+assignments were small relative to the uncertainty intervals: for both sexes,
+the largest difference in prevalence among these three outcomes was
+0\dec{}54 percentage points.
 
 \begin{table}[p]
 \centering
-\caption{Adjusted population detection and modelled prevalence in assignment
-A, both sexes}
+\caption{Lesion detection under universal colonoscopy and prevalence in
+assignment A, both sexes}
 \label{tab:modelled}
 \begin{threeparttable}
 \scriptsize
@@ -665,8 +648,8 @@ A, both sexes}
 \begin{tabularx}{\linewidth}{@{}Y L{0.19\linewidth}L{0.19\linewidth}
 L{0.19\linewidth}L{0.19\linewidth}@{}}
 \toprule
-& \multicolumn{2}{c}{\textbf{Adjusted population detection, \%}} &
-\multicolumn{2}{c}{\textbf{Modelled prevalence, \%}}\\
+& \multicolumn{2}{c}{\textbf{Lesion detection under universal colonoscopy, \%}} &
+\multicolumn{2}{c}{\textbf{Prevalence, \%}}\\
 \cmidrule(lr){2-3}\cmidrule(lr){4-5}
 \textbf{Lesion category} &
 \textbf{PRENEC FIT sensitivity} &
@@ -675,29 +658,30 @@ L{0.19\linewidth}L{0.19\linewidth}@{}}
 \textbf{Literature FIT sensitivity}\\
 \midrule
 Low-risk adenoma &
-20\dec{}9 (9\dec{}0--35\dec{}1) &
-18\dec{}8 (10\dec{}0--29\dec{}2) &
-26\dec{}1 (11\dec{}5--44\dec{}2) &
-23\dec{}6 (12\dec{}3--36\dec{}3)\\
+22\dec{}3 (15\dec{}0--35\dec{}1) &
+20\dec{}5 (16\dec{}9--24\dec{}5) &
+27\dec{}9 (18\dec{}7--44\dec{}1) &
+25\dec{}7 (21\dec{}2--30\dec{}8)\\
 High-risk adenoma &
-9\dec{}0 (4\dec{}9--13\dec{}7) &
-8\dec{}4 (4\dec{}9--12\dec{}0) &
-11\dec{}1 (5\dec{}7--17\dec{}1) &
-10\dec{}4 (6\dec{}0--15\dec{}3)\\
+9\dec{}8 (7\dec{}4--13\dec{}4) &
+9\dec{}2 (8\dec{}1--10\dec{}6) &
+11\dec{}9 (8\dec{}7--17\dec{}2) &
+11\dec{}3 (9\dec{}5--14\dec{}2)\\
 Colorectal cancer &
-0\dec{}271 (0\dec{}040--0\dec{}558) &
-0\dec{}369 (0\dec{}059--0\dec{}766) &
-0\dec{}300 (0\dec{}049--0\dec{}623) &
-0\dec{}408 (0\dec{}063--0\dec{}851)\\
+0\dec{}299 (0\dec{}245--0\dec{}466) &
+0\dec{}404 (0\dec{}312--0\dec{}520) &
+0\dec{}328 (0\dec{}268--0\dec{}525) &
+0\dec{}443 (0\dec{}340--0\dec{}582)\\
 \bottomrule
 \end{tabularx}
 \begin{tablenotes}[flushleft]
 \footnotesize
-\item[] Values are simulation means (95\% HPD intervals). Adjusted population
-detection corrects $d_j$ for FIT sensitivity and colonoscopy participation.
-Modelled prevalence additionally corrects for colonoscopy sensitivity.
-Uncertainty in colonoscopy participation was propagated.
-\item[] FIT=faecal immunochemical test; HPD=highest posterior density.
+\item[] Values are plug-in estimates (equal-tail 95\% percentile intervals).
+Lesion detection under universal colonoscopy corrects $d_j$ for FIT sensitivity
+and colonoscopy participation. Prevalence additionally corrects for
+colonoscopy sensitivity. The joint participant bootstrap recalculated the
+nested screening counts and participation correction together.
+\item[] FIT=faecal immunochemical test.
 \end{tablenotes}
 \end{threeparttable}
 \end{table}
@@ -705,34 +689,76 @@ Uncertainty in colonoscopy participation was propagated.
 \begin{figure}[p]
 \centering
 \includegraphics[width=\textwidth,height=0.78\textheight,keepaspectratio]
-  {outputs/figure_publication_lancet_adherence_sampled_20261007/figure_adjusted_detection_prevalence_adherence_sampled.pdf}
-\caption{\textbf{Adjusted population detection and modelled prevalence under
-PRENEC-derived and literature-based FIT sensitivity scenarios.}
-Panel A shows population detection after correction for FIT sensitivity and
-colonoscopy participation; panel B additionally corrects for colonoscopy
-sensitivity. Columns show low-risk adenoma, high-risk adenoma, and colorectal
-cancer. The two rows identify the PRENEC-derived and literature-based FIT
-sensitivity scenarios. Within each scenario, filled circles and solid
-intervals denote Base A, open circles and dashed intervals denote Base B, and
-Base A is shown above Base B.
-Points are simulation means and horizontal lines are 95\% HPD intervals.
-Uncertainty in colonoscopy participation was propagated in both panels.
-FIT=faecal immunochemical test; HPD=highest posterior density.}
+  {figure_joint_bootstrap_both_sexes.pdf}
+\caption{\textbf{Lesion detection under universal colonoscopy and prevalence
+using PRENEC-derived and literature-based FIT sensitivities.}
+Panel A shows lesion detection under universal colonoscopy after correction
+for FIT sensitivity and colonoscopy participation; panel B additionally
+corrects for colonoscopy sensitivity. Columns show low-risk adenoma,
+high-risk adenoma, any adenoma, and colorectal cancer. Rows denote the
+source of FIT sensitivity. Filled circles with solid intervals and open circles
+with dashed intervals denote assignments A and B, respectively. Points are
+plug-in estimates and horizontal lines are equal-tail 95\% percentile
+intervals from the full joint uncertainty analysis. Participant records were
+resampled jointly within sex--age strata, while uncertainty in FIT and
+colonoscopy sensitivity was propagated separately. FIT=faecal immunochemical
+test.}
 \label{fig:modelled}
 \end{figure}
 
 \subsection*{Results by sex}
 
-In assignment A with PRENEC-derived FIT sensitivity, modelled prevalence was
-higher among men than women for all three outcomes. Low-risk adenoma
-prevalence was 36\dec{}5\% (95\% HPD interval 9\dec{}2--69\dec{}5) among men
-and 22\dec{}1\% (7\dec{}6--38\dec{}7) among women. High-risk adenoma
-prevalence was 16\dec{}4\% (5\dec{}6--28\dec{}7) among men and 9\dec{}3\%
-(4\dec{}0--15\dec{}1) among women. Colorectal cancer prevalence was
-0\dec{}531\% (0\dec{}032--1\dec{}249) among men and 0\dec{}215\%
-(0\dec{}014--0\dec{}510) among women. Literature-based sensitivity produced
-the same ordering. Uncertainty intervals were wide and overlapped between
-sexes (table~\ref{tab:sexresults}).
+Under assignment A and PRENEC-derived FIT sensitivity, estimated lesion
+detection under universal colonoscopy was higher among men than women for
+low-risk adenoma (31\dec{}7\% [95\% interval 20\dec{}8--50\dec{}5] vs
+18\dec{}9\% [12\dec{}6--29\dec{}9]), high-risk adenoma (14\dec{}4\%
+[10\dec{}7--20\dec{}0] vs 8\dec{}1\% [6\dec{}0--11\dec{}2]), and colorectal
+cancer (0\dec{}542\% [0\dec{}397--0\dec{}877] vs 0\dec{}211\%
+[0\dec{}156--0\dec{}343]). Using literature-based FIT sensitivity, the same
+sex pattern was observed: corresponding estimates among men and women were
+29\dec{}1\% (23\dec{}1--36\dec{}0) and 17\dec{}4\%
+(14\dec{}1--21\dec{}1) for low-risk adenoma, 13\dec{}6\%
+(11\dec{}5--16\dec{}1) and 7\dec{}7\% (6\dec{}6--8\dec{}9) for high-risk
+adenoma, and 0\dec{}732\% (0\dec{}506--1\dec{}008) and 0\dec{}286\%
+(0\dec{}198--0\dec{}388) for colorectal cancer
+(figure~\ref{fig:sexmodelled}).
+
+After additional correction for colonoscopy sensitivity, prevalence was also
+higher among men than women. With PRENEC-derived FIT sensitivity, low-risk
+adenoma prevalence was 39\dec{}7\% (26\dec{}2--63\dec{}6) among men and
+23\dec{}7\% (15\dec{}8--37\dec{}6) among women; high-risk adenoma prevalence
+was 17\dec{}6\% (12\dec{}7--25\dec{}7) and 9\dec{}9\%
+(7\dec{}2--14\dec{}3), respectively; and colorectal cancer prevalence was
+0\dec{}594\% (0\dec{}435--0\dec{}979) and 0\dec{}232\%
+(0\dec{}171--0\dec{}382), respectively. Literature-based FIT sensitivity
+produced the same ordering. Uncertainty intervals overlapped between sexes for
+some outcomes (table~\ref{tab:sexresults}; figure~\ref{fig:sexmodelled}).
+
+\subsection*{Variance decomposition}
+
+For lesion detection under universal colonoscopy in assignment A, uncertainty
+in FIT sensitivity accounted for most of the attributable log-scale variance
+for low-risk adenoma (95\dec{}0\% with PRENEC-derived FIT sensitivity and
+74\dec{}0\% with literature-based FIT sensitivity) and high-risk adenoma
+(92\dec{}6\% and 63\dec{}9\%, respectively). For colorectal cancer, when
+PRENEC-derived FIT sensitivity was used, variance was divided almost equally
+between FIT sensitivity (50\dec{}1\%) and the screening data (49\dec{}9\%);
+with literature-based FIT sensitivity, the screening data contributed
+73\dec{}8\%.
+Colonoscopy sensitivity did not contribute to this estimand.
+
+For prevalence, FIT sensitivity remained the main source of variance for
+low-risk adenoma, contributing 94\dec{}3\% with PRENEC-derived FIT sensitivity
+and 71\dec{}4\% with literature-based FIT sensitivity. For high-risk adenoma,
+the FIT-sensitivity component contributed 73\dec{}7\% and the
+colonoscopy-sensitivity component 20\dec{}4\% when PRENEC-derived FIT
+sensitivity was used; with literature-based FIT sensitivity, the
+colonoscopy-sensitivity component was largest (55\dec{}5\%). For colorectal
+cancer prevalence, when PRENEC-derived FIT sensitivity was used, uncertainty
+was again divided mainly between FIT sensitivity (46\dec{}7\%) and the
+screening data (46\dec{}5\%); with literature-based FIT sensitivity, the
+screening data dominated (66\dec{}6\%). These percentages describe shares of
+variance rather than absolute interval width (figure~\ref{fig:variance}).
 
 \section*{Discussion}
 
@@ -744,6 +770,11 @@ the final model specification, results, and interpretation.}}}
 
 \clearpage
 \section*{Supplementary Methods}
+
+\setcounter{figure}{0}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\setcounter{table}{0}
+\renewcommand{\thetable}{S\arabic{table}}
 
 \subsection*{Relationship with the Rogan--Gladen correction}
 
@@ -805,40 +836,277 @@ FIT--colonoscopy--histology pathway. FIT specificity affects the number of
 colonoscopies generated but cannot create a histologically confirmed adenoma
 or cancer in the numerator.
 
-\subsection*{Sex-specific model estimates}
+\subsection*{Relationship between the adherence correction and the joint
+bootstrap}
 
-\setcounter{table}{0}
-\renewcommand{\thetable}{S\arabic{table}}
+For sex-by-age stratum $h$, let $N_h$ denote the analytical population,
+$F_h^+$ the number with a positive selected FIT, $C_h$ the number of
+FIT-positive participants completing a qualifying colonoscopy, and $D_{j,h}$
+the number in whom lesion category $j$ was detected and confirmed
+histologically. Estimated colonoscopy participation was
+
+\begin{equation*}
+\widehat{\Adh}_h=\frac{C_h}{F_h^+}.
+\end{equation*}
+
+The observed population detection proportion was $D_{j,h}/N_h$. Retaining the
+adherence correction explicitly, the corresponding empirical pathway
+component was
+
+\begin{equation}
+\widehat Q_j
+=
+\sum_h w_h
+\frac{D_{j,h}/N_h}{C_h/F_h^+},
+\qquad
+w_h=\frac{N_h}{N}.
+\label{eq:q-adherence}
+\end{equation}
+
+Within each stratum, equation~\eqref{eq:q-adherence} has the exact algebraic
+representation
+
+\begin{align}
+\frac{D_{j,h}/N_h}{C_h/F_h^+}
+&=
+\left(\frac{F_h^+}{N_h}\right)
+\left(\frac{D_{j,h}}{C_h}\right),
+\\
+\widehat Q_j
+&=
+\sum_h w_h
+\underbrace{\left(\frac{F_h^+}{N_h}\right)}_{\text{FIT positivity}}
+\;\times\;
+\underbrace{\left(\frac{D_{j,h}}{C_h}\right)}_{\text{yield among colonoscopy completers}}.
+\label{eq:q-yield}
+\end{align}
+
+Thus, correcting observed detection by participation and multiplying FIT
+positivity by colonoscopy yield are two expressions of the same estimator.
+Under the identification assumptions described in the main Methods,
+
+\begin{equation*}
+\widehat r_j
+=\frac{\widehat Q_j}{\Se_{\mathrm{FIT},j}},
+\qquad
+\widehat p_j
+=\frac{\widehat Q_j}
+{\Se_{\mathrm{FIT},j}\Se_{\mathrm{COL},j}},
+\end{equation*}
+
+where $\widehat r_j$ is lesion detection under universal colonoscopy and
+$\widehat p_j$ is lesion prevalence.
+
+The algebraic identity does not imply that colonoscopy participation is
+irrelevant. It relies on the assumption that, within each stratum,
+colonoscopy yield among completers is applicable to all participants with a
+positive selected FIT. Differential participation according to lesion status
+could therefore bias both representations. Moreover, incomplete participation
+reduces $C_h$ and consequently increases sampling uncertainty. The identity
+does imply that participation should not be sampled independently of observed
+detection: $D_{j,h}$ is nested within $C_h$, and $C_h$ is nested within
+$F_h^+$. Independently drawing $D_{j,h}/N_h$ and $C_h/F_h^+$ would disregard
+their shared participants and could misrepresent uncertainty.
+
+\subsection*{Joint participant-bootstrap implementation}
+
+The analytical population comprised participants aged 50--75 years without a
+reported family history of colorectal cancer and with at least one observed
+FIT result. Participants were resampled with replacement within the 12
+sex-by-age strata defined by sex and age groups 50--54, 55--59, 60--64,
+65--69, 70--74, and 75 years. Computationally, this was implemented by drawing
+multinomial counts over the distinct joint participant patterns observed
+within each stratum, which is equivalent to an ordinary stratified
+non-parametric participant bootstrap.
+
+Stratum sizes and, consequently, the analytical-population weights $w_h$ were
+held fixed. In every replicate $b$, the nested counts
+$F_h^{+(b)}$, $C_h^{(b)}$, and $D_{j,h}^{(b)}$ were reconstructed jointly and
+
+\begin{equation*}
+Q_j^{(b)}
+=
+\sum_h w_h
+\frac{D_{j,h}^{(b)}/N_h}
+     {C_h^{(b)}/F_h^{+(b)}}
+=
+\sum_h w_h
+\left(\frac{F_h^{+(b)}}{N_h}\right)
+\left(\frac{D_{j,h}^{(b)}}{C_h^{(b)}}\right)
+\end{equation*}
+
+was calculated. A single bank of 10\,000 participant resamples was reused
+across assignments A and B, lesion categories, reported populations, and the
+two sources of FIT sensitivity. This preserved the empirical dependence of comparisons
+made using the same participants.
+
+Sensitivity uncertainty was introduced independently of the target-population
+bootstrap. PRENEC-derived FIT sensitivities followed Jeffreys beta
+distributions,
+
+\begin{equation*}
+\Se_{\mathrm{FIT},j}^{(b)}
+\sim
+\BetaDist(\mathrm{TP}_j+0\dec{}5,\mathrm{FN}_j+0\dec{}5).
+\end{equation*}
+
+This included $\BetaDist(6\dec{}5,0\dec{}5)$ for colorectal cancer, based on
+six FIT-positive cases and no observed false-negative cases.
+Literature-based FIT sensitivities followed the beta or logit-normal
+distributions specified for their respective evidence sources. Colonoscopy
+sensitivities followed the prespecified beta distributions derived from the
+external evidence. These sensitivity draws were independent of the
+participant bootstrap and of one another.
+
+For the full uncertainty analysis, each replicate was calculated as
+
+\begin{equation*}
+r_j^{(b)}
+=
+\frac{Q_j^{(b)}}{\Se_{\mathrm{FIT},j}^{(b)}},
+\qquad
+p_j^{(b)}
+=
+\frac{Q_j^{(b)}}
+{\Se_{\mathrm{FIT},j}^{(b)}
+ \Se_{\mathrm{COL},j}^{(b)}}.
+\end{equation*}
+
+Separate runs varied only the screening data, only FIT sensitivity, only
+colonoscopy sensitivity, or all applicable components. Colonoscopy sensitivity
+was structurally absent from lesion detection under universal colonoscopy and
+was varied only for prevalence. Point estimates used the observed counts and
+point sensitivity estimates; bootstrap draws were used to construct
+uncertainty intervals.
+
+\subsection*{Variance decomposition}
+
+Variance was decomposed on the logarithmic scale because the estimators combine
+their inputs multiplicatively. For each lesion, source of FIT sensitivity,
+population, and assignment, the component variances were estimated from the
+corresponding draws as
+
+\begin{align*}
+V_{Q,j}
+&=\operatorname{Var}_b\{\log(Q_j^{(b)})\},
+\\
+V_{\mathrm{FIT},j}
+&=\operatorname{Var}_b
+\{\log(\Se_{\mathrm{FIT},j}^{(b)})\},
+\\
+V_{\mathrm{COL},j}
+&=\operatorname{Var}_b
+\{\log(\Se_{\mathrm{COL},j}^{(b)})\}.
+\end{align*}
+
+Because the participant bootstrap, FIT-sensitivity draws, and
+colonoscopy-sensitivity draws were generated as independent input blocks,
+
+\begin{align}
+\operatorname{Var}\{\log(\widehat r_j)\}
+&=V_{Q,j}+V_{\mathrm{FIT},j},
+\label{eq:var-detection}
+\\
+\operatorname{Var}\{\log(\widehat p_j)\}
+&=V_{Q,j}+V_{\mathrm{FIT},j}+V_{\mathrm{COL},j}.
+\label{eq:var-prevalence}
+\end{align}
+
+The minus signs arising from division by sensitivity do not alter the
+individual variance terms, and covariance terms are zero under the
+independence assumption. The screening-data component $V_{Q,j}$ jointly
+contains sampling uncertainty in FIT positivity, colonoscopy participation,
+and lesion yield; adherence was therefore not assigned an additional,
+independent variance component.
+
+For an estimand with total attributable log variance $V_{\mathrm{tot},j}$, the
+percentage contribution from source $k$ was
+
+\begin{equation*}
+S_{k,j}
+=100\,
+\frac{V_{k,j}}{V_{\mathrm{tot},j}}.
+\end{equation*}
+
+For lesion detection under universal colonoscopy,
+$V_{\mathrm{tot},j}=V_{Q,j}+V_{\mathrm{FIT},j}$; for prevalence,
+$V_{\mathrm{tot},j}=V_{Q,j}+V_{\mathrm{FIT},j}+V_{\mathrm{COL},j}$. The
+shares therefore sum to 100\% by construction. The log variance calculated
+directly from the full-analysis draws was retained as a numerical check on the
+additive decomposition; small discrepancies represent Monte Carlo error rather
+than an additional source of uncertainty.
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.80\textheight,keepaspectratio]
+  {figure_variance_decomposition_sample_a.pdf}
+\caption{\textbf{Sources of uncertainty in lesion detection under universal
+colonoscopy and prevalence for FIT assignment A.}
+Stacked bars show the percentage of total attributable log-scale variance
+arising from the screening data, FIT sensitivity, and colonoscopy sensitivity
+for low-risk adenoma, high-risk adenoma, and colorectal cancer among both
+sexes combined. The screening-data component jointly includes uncertainty in
+FIT positivity, colonoscopy participation, and lesion yield. Results are shown
+separately for PRENEC-derived and literature-based FIT sensitivities. Each bar
+sums to 100\%. Colonoscopy sensitivity does not enter lesion detection under
+universal colonoscopy and therefore contributes only to prevalence. Numbers
+within sufficiently large segments are percentages.}
+\label{fig:variance}
+\end{figure}
+
+\subsection*{Sex-specific model estimates}
 
 \begin{longtable}{@{}L{0.12\textwidth}L{0.14\textwidth}
 L{0.16\textwidth}L{0.22\textwidth}L{0.22\textwidth}@{}}
-\caption{Modelled prevalence in assignment A by sex and FIT sensitivity
-scenario}\label{tab:sexresults}\\
+\caption{Prevalence in assignment A by sex and source of FIT sensitivity}
+\label{tab:sexresults}\\
 \toprule
-\textbf{Sex} & \textbf{Lesion} & \textbf{FIT scenario} &
-\textbf{Mean, \%} & \textbf{95\% HPD interval, \%}\\
+\textbf{Sex} & \textbf{Lesion} & \textbf{FIT sensitivity} &
+\textbf{Estimate, \%} & \textbf{95\% interval, \%}\\
 \midrule
 \endfirsthead
 \toprule
-\textbf{Sex} & \textbf{Lesion} & \textbf{FIT scenario} &
-\textbf{Mean, \%} & \textbf{95\% HPD interval, \%}\\
+\textbf{Sex} & \textbf{Lesion} & \textbf{FIT sensitivity} &
+\textbf{Estimate, \%} & \textbf{95\% interval, \%}\\
 \midrule
 \endhead
-Women & Low risk & PRENEC & 22\dec{}10 & 7\dec{}59--38\dec{}67\\
-Women & Low risk & Literature & 20\dec{}00 & 8\dec{}52--32\dec{}57\\
-Women & High risk & PRENEC & 9\dec{}31 & 4\dec{}01--15\dec{}14\\
-Women & High risk & Literature & 8\dec{}73 & 4\dec{}30--13\dec{}69\\
-Women & Cancer & PRENEC & 0\dec{}215 & 0\dec{}014--0\dec{}510\\
-Women & Cancer & Literature & 0\dec{}293 & 0\dec{}017--0\dec{}692\\
+Women & Low risk & PRENEC & 23\dec{}66 & 15\dec{}79--37\dec{}61\\
+Women & Low risk & Literature & 21\dec{}74 & 17\dec{}63--26\dec{}50\\
+Women & High risk & PRENEC & 9\dec{}86 & 7\dec{}19--14\dec{}28\\
+Women & High risk & Literature & 9\dec{}33 & 7\dec{}73--11\dec{}84\\
+Women & Cancer & PRENEC & 0\dec{}232 & 0\dec{}171--0\dec{}382\\
+Women & Cancer & Literature & 0\dec{}313 & 0\dec{}217--0\dec{}434\\
 \addlinespace
-Men & Low risk & PRENEC & 36\dec{}50 & 9\dec{}25--69\dec{}49\\
-Men & Low risk & Literature & 33\dec{}02 & 9\dec{}43--59\dec{}78\\
-Men & High risk & PRENEC & 16\dec{}37 & 5\dec{}55--28\dec{}74\\
-Men & High risk & Literature & 15\dec{}34 & 5\dec{}95--25\dec{}79\\
-Men & Cancer & PRENEC & 0\dec{}531 & 0\dec{}032--1\dec{}249\\
-Men & Cancer & Literature & 0\dec{}721 & 0\dec{}053--1\dec{}695\\
+Men & Low risk & PRENEC & 39\dec{}72 & 26\dec{}15--63\dec{}64\\
+Men & Low risk & Literature & 36\dec{}48 & 28\dec{}79--45\dec{}23\\
+Men & High risk & PRENEC & 17\dec{}56 & 12\dec{}71--25\dec{}75\\
+Men & High risk & Literature & 16\dec{}61 & 13\dec{}55--21\dec{}32\\
+Men & Cancer & PRENEC & 0\dec{}594 & 0\dec{}435--0\dec{}979\\
+Men & Cancer & Literature & 0\dec{}802 & 0\dec{}554--1\dec{}131\\
 \bottomrule
 \end{longtable}
+
+\noindent\footnotesize Estimates are plug-in estimates; 95\% intervals are
+equal-tail percentile intervals from the full joint uncertainty analysis.
+\normalsize
+
+\begin{figure}[p]
+\centering
+\includegraphics[width=\textwidth,height=0.82\textheight,keepaspectratio]
+  {figure_joint_bootstrap_by_sex_supplementary.pdf}
+\caption{\textbf{Sex-specific lesion detection under universal colonoscopy
+and prevalence using PRENEC-derived and literature-based FIT sensitivities.}
+Panels A and B show lesion detection under universal colonoscopy and
+prevalence among men; panels C and D show the corresponding estimates among
+women. Columns show low-risk adenoma, high-risk adenoma, any adenoma, and
+colorectal cancer. Filled circles with solid intervals and open circles with
+dashed intervals denote assignments A and B, respectively. Points are plug-in
+estimates and horizontal lines are equal-tail 95\% percentile intervals from
+the full joint uncertainty analysis. Within each lesion category, the same
+horizontal-axis scale is used for men and women and for both estimands; scales
+differ across lesion categories. FIT=faecal immunochemical test.}
+\label{fig:sexmodelled}
+\end{figure}
 
 \clearpage
 \begin{thebibliography}{99}
@@ -932,6 +1200,18 @@ Rogan WJ, Gladen B.
 Estimating prevalence from the results of a screening test.
 \textit{Am J Epidemiol}. 1978;107:71--76.
 \href{https://doi.org/10.1093/oxfordjournals.aje.a112510}{doi:10.1093/oxfordjournals.aje.a112510}.
+
+\bibitem{Cohen2016}
+Cohen JF, Korevaar DA, Altman DG, Bruns DE, Gatsonis CA, Hooft L, et al.
+STARD 2015 guidelines for reporting diagnostic accuracy studies: explanation and elaboration.
+\textit{BMJ Open}. 2016;6:e012799.
+\href{https://doi.org/10.1136/bmjopen-2016-012799}{doi:10.1136/bmjopen-2016-012799}.
+
+\bibitem{Doubeni2016}
+Doubeni CA, Jensen CD, Fedewa SA, Quinn VP, Zauber AG, Schottinger JE, et al.
+Fecal immunochemical test (FIT) for colon cancer screening: variable performance with ambient temperature.
+\textit{J Am Board Fam Med}. 2016;29:672--681.
+\href{https://doi.org/10.3122/jabfm.2016.06.160060}{doi:10.3122/jabfm.2016.06.160060}.
 
 \bibitem{Park2010}
 Park DI, Ryu S, Kim YH, Lee SH, Lee CK, Eun CS, et al.
